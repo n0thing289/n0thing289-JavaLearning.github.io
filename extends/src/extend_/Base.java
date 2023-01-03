@@ -7,7 +7,13 @@ public class Base {
     private int n4 = 400;
 
     public Base() {
-        System.out.println("Base()...");
+        System.out.println("父类构造器被调用Base()...");
+    }
+    public Base(String  name, int age) {
+        System.out.println("父类构造器被调用Base(System name, int age)...");
+    }
+    public int getN4(){
+        return n4;
     }
 
     public void test100() {
@@ -24,6 +30,10 @@ public class Base {
 
     private void test400() {
         System.out.println("test400");
+    }
+
+    public void caltest400(){
+        test400();
     }
 
 }
