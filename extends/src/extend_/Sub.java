@@ -16,6 +16,7 @@ public class Sub extends Base {//ctrl + h查看类的关系
     }
 
     public Sub(String name) {
+        //默认super()
         System.out.println("子类构造器被调用Sub(String name)....");
     }
 
