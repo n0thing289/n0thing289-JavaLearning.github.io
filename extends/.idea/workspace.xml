@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fcc1352-f586-4754-93b1-64a2ae43000b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/extend_/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/extend_/Base.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/extend_/Sub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/extend_/Sub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/继承.docx" beforeDir="false" afterPath="$PROJECT_DIR$/继承.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,9 +47,9 @@
       <recent name="extend_" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ExtendsDetail">
-    <configuration name="Extends01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="extend_.Extends01" />
+  <component name="RunManager" selected="Application.ExtendsExercise03">
+    <configuration name="ExtendsDetail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="extend_.ExtendsDetail" />
       <module name="extends" />
       <extension name="coverage">
         <pattern>
@@ -62,12 +61,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExtendsDetail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="extend_.ExtendsDetail" />
+    <configuration name="ExtendsExercise01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="extend_.exercise.ExtendsExercise01" />
       <module name="extends" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="extend_.*" />
+          <option name="PATTERN" value="extend_.exercise.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExtendsExercise02" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="extend_.exercise.ExtendsExercise02" />
+      <module name="extends" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="extend_.exercise.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExtendsExercise03" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="extend_.exercise.ExtendsExercise03" />
+      <module name="extends" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="extend_.exercise.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -88,25 +113,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="extend_.extend_improve.Extends01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="extend_.extend_improve.Extends01" />
-      <module name="extends" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="extend_.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ExtendsExercise03" />
+        <item itemvalue="Application.ExtendsExercise02" />
+        <item itemvalue="Application.ExtendsExercise01" />
         <item itemvalue="Application.ExtendsDetail" />
         <item itemvalue="Application.Sub" />
-        <item itemvalue="Application.extend_.extend_improve.Extends01" />
-        <item itemvalue="Application.Extends01" />
       </list>
     </recent_temporary>
   </component>
