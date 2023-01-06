@@ -28,8 +28,7 @@ public class B extends A {
         System.out.println("B类的sum()方法...");
 //        cal();//注释A中cal()和private void cal()提示信息不一样
 //        this.cal();
-        this.cal();//直接从父类开始找,其余逻辑一样
-        super.cal();
+        super.cal();//直接从父类开始找,其余逻辑一样
 
         //检验属性的向上查找机制
 //        System.out.println(n1);
