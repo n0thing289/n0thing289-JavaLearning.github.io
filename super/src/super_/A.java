@@ -35,7 +35,7 @@ public class A {
 
     }
 
-    public void cal(){
+    public void cal() {
         System.out.println("A类的cal()方法被调用...");
     }
 
