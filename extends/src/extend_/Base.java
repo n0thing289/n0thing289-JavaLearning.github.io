@@ -12,10 +12,12 @@ public class Base {
         //由于object类的构造器没有提示输出，所以我们看不见到底执行了没有
         System.out.println("父类构造器被调用Base()...");
     }
-    public Base(String  name, int age) {
+
+    public Base(String name, int age) {
         System.out.println("父类构造器被调用Base(System name, int age)...");
     }
-    public int getN4(){
+
+    public int getN4() {
         return n4;
     }
 
@@ -35,7 +37,7 @@ public class Base {
         System.out.println("test400");
     }
 
-    public void caltest400(){
+    public void caltest400() {
         test400();
     }
 

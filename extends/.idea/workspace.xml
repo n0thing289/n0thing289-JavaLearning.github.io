@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fcc1352-f586-4754-93b1-64a2ae43000b" name="Changes" comment="" />
+    <list default="true" id="9fcc1352-f586-4754-93b1-64a2ae43000b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../breakpoint debugging/~WRL1124.tmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/extend_/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/extend_/Base.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/继承.docx" beforeDir="false" afterPath="$PROJECT_DIR$/继承.docx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
