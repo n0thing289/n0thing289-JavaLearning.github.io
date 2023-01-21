@@ -16,5 +16,12 @@ public class Extends01 {
         graduate.testing();
         graduate.setScore(100);
         graduate.showinfo();
+
+        for(int i=1;i<=9;i++){
+            for(int j=1;j<=i;j++){
+                System.out.print("\t" + j + "*" + i + "=" + (j*i) + "\t");
+            }
+            System.out.println();
+        }
     }
 }

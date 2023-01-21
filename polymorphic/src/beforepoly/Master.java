@@ -21,6 +21,5 @@ public class Master {
     //给鱼喂食
     public void feed(Cat cat, Fish fish){
         System.out.println("Master:" + name + " 给 " + cat.getName() + "吃" + fish.getName());
-
     }
 }

@@ -8,7 +8,6 @@ public class polyDetail {
         //1. 向上转型
 //        animal.catchMouse();//先编译，而编译时是由编译类型决定能够调用那些成员
         animal.run();
-
         animal.jump();
         animal.show();
         animal.sleep();
@@ -17,6 +16,8 @@ public class polyDetail {
 
         //语法如下
         Cat cat = (Cat) animal;
+        cat.name = "cat";
+        System.out.println(cat.name);
         cat.catchMouse();
 
         //注意，你父类的引用必须原本就指向了我想要转成子类的对象
