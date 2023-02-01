@@ -5,6 +5,7 @@ import java.util.Date;
     老韩的重要思想:
         1. 一段代码只实现一个小功能
         2. 条件判断时,找不正确的条件
+        3. 跟着功能来写变量
  */
 public class smallChargeSys {
     //1.
