@@ -5,27 +5,56 @@ public class Homework01 {
         Person p1 = new Person("p1", 1, "csgo");
         Person p2 = new Person("p2", 2, "csgo");
         Person p3 = new Person("p3", 3, "csgo");
+
+
         Person[] arr = p1.sorting(p1, p2, p3);
-//        for (int i = 0; i < arr.length; i++) {
-//            System.out.print(arr[i].name);
-//            System.out.println(arr[i].age);
-//        }
-        System.out.println(arr[0].age);
-        System.out.println(arr[0].name);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i].toString());
+
+        }
+//        System.out.println(arr[0]);
+//        System.out.println(arr[0].getName());
 //        Test test = new Test();
 
     }
 }
 
 class Person {
-    String name;
-    int age;
-    String job;
+    private String name;
+    private int age;
+    private String job;
 
     Person(String name, int age, String job) {
         this.name = name;
         this.age = age;
         this.job = job;
+    }
+    public void setName(){
+        this.name = name;
+    }
+    public void setAge(){
+        this.age = age;
+    }
+    public void setJob(){
+        this.job = job;
+    }
+    public String getName(){
+        return name;
+    }
+    public int getAge(){
+        return age;
+    }
+    public String getJob(){
+        return job;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", job='" + job + '\'' +
+                '}';
     }
 
     public Person[] sorting(Person... p) {
