@@ -1,4 +1,4 @@
-package eight;
+package home08;
 
 public class Homework08 {
     public static void main(String[] args) {

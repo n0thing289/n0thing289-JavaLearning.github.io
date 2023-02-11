@@ -1,4 +1,4 @@
-package one_and_two;
+package home01;
 
 public class Homework02 {
     public int i1 = 100;

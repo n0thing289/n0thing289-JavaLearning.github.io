@@ -1,9 +1,9 @@
-package five;
+package home05;
 
-import four.Employee;
+import home04.Employee;
 
-public class Waiter extends Employee {
-    public Waiter(String name, double day_money, int work_days, double grade) {
+public class Farmmer extends Employee {
+    Farmmer(String name, double day_money, int work_days, double grade){
         super(name, day_money, work_days, grade);
     }
 
@@ -15,7 +15,7 @@ public class Waiter extends Employee {
 
     @Override
     public void printSalary() {
-        System.out.print("服务员");
+        System.out.print("农民");
         super.printSalary();
     }
 }

@@ -1,4 +1,4 @@
-package eight;
+package home08;
 
 public class BankAccount {
     private double balance;

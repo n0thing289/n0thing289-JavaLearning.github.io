@@ -1,4 +1,4 @@
-import one_and_two.Homework02;
+import home01.Homework02;
 //import one_and_two.Test;
 
 public class Main extends Homework02{

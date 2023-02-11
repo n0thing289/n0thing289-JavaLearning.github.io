@@ -1,6 +1,6 @@
-package five;
+package home05;
 
-import four.Employee;
+import home04.Employee;
 
 public class Worker extends Employee {
     Worker(String name, double day_money, int work_days, double grade){

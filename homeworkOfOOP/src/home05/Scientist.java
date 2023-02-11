@@ -1,6 +1,6 @@
-package five;
+package home05;
 
-import four.Employee;
+import home04.Employee;
 
 public class Scientist extends Employee {
     private double bonus;

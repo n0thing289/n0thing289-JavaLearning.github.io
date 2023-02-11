@@ -1,4 +1,4 @@
-package eight;
+package home08;
 
 public class CheckingAccount extends BankAccount {
     public CheckingAccount(double initialBalance) {
