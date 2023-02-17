@@ -1,0 +1,10 @@
+package v01;
+
+public class Main {
+    public static void main(String[] args) {
+//        System.out.println("Hello world!");
+        HouseRental houseRental = new HouseRental();
+        houseRental.mainMenu();
+    }
+
+}
