@@ -1,6 +1,6 @@
 package v02hsp.domain;
 
-public class house {
+public class House {
     private int id;
     private String name;
     private String tel;
@@ -8,7 +8,7 @@ public class house {
     private int rent;
     private String state;
 
-    public house(int id, String name, String tel, String position, int rent, String state) {
+    public House(int id, String name, String tel, String position, int rent, String state) {
         this.id = id;
         this.name = name;
         this.tel = tel;
@@ -66,12 +66,12 @@ public class house {
     }
 
     @Override
-    public String toString() {
+    public String toString() {//打印一个对象的时候默认打印toString()返回的字符串,但是我们一般重写
         return id +
-                "\t" + name +
-                "\t" + tel +
-                "\t" + position +
-                "\t" + rent +
-                "\t" + state;
+                "\t\t" + name +
+                "\t\t" + tel +
+                "\t\t" + position +
+                "\t\t" + rent +
+                "\t\t" + state;
     }
 }
