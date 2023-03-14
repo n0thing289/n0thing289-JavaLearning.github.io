@@ -1,3 +1,5 @@
+package exercise.second;
+
 public class TestTemplate{
 	public static void main(String[] args){
 		new AA().show();

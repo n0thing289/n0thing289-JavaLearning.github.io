@@ -3,6 +3,8 @@ public class Abstract01 {
         new Dog().eat();
     }
 }
+
+
 abstract class Animal{
     String name;
     int age;

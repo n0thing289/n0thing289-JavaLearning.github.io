@@ -1,6 +1,6 @@
 package exercise;
 
-public class Main {
+public class AbstractExercise01 {
     public static void main(String[] args) {
         Manage hwk = new Manage("hwk", 666, 10000, 1000);
         CommonEmployee qaz = new CommonEmployee("qaz", 001, 5000);

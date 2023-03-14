@@ -1,6 +1,8 @@
+package exercise.second;
+
 public class AA extends Template{
 	
-	public static String name = "AA";
+	public static String name = "exercise.second.AA";
 	public void job(){
 		long num = 0;
 		for(int i=0;i<1000000000;i++){
