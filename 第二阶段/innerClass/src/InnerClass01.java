@@ -1,18 +1,19 @@
 public class InnerClass01 {
-    public static void main(String[] args) {
-
-    }
 }
-class Outer{
-    private int n1 = 100;
 
-    public void m1(){
-        System.out.println("m1()");
+class outer{
+    private int n1 = 10;
+    public outer(int n1){
+        this.n1 = n1;
     }
+    public void f1(){}
     {
-        System.out.println("daimakuai");
+        System.out.println("code block");
     }
-    public Outer(){
-        System.out.println("Outer构造器()");
+
+    class inner{
+
     }
 }
+
+class Other{}
