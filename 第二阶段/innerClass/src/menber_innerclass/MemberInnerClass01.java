@@ -1,5 +1,8 @@
 package menber_innerclass;
-
+// 定义位置
+// 地位 -> 修饰符&作用域
+// 访问(地位)
+// 重名
 public class MemberInnerClass01 {
     public static void main(String[] args) {
         Outer08 outer08 = new Outer08();

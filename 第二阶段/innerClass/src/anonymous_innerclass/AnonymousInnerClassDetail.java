@@ -1,4 +1,4 @@
-package innerclass.anonymous_innerclass;
+package anonymous_innerclass;
 
 public class AnonymousInnerClassDetail {
     public static void main(String[] args) {
