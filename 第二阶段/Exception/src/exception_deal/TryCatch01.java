@@ -1,0 +1,2 @@
+public class TryCatch01 {
+}
