@@ -1,3 +1,5 @@
+package five_runtimeException;
+
 public class ClassCastException_ {
     public static void main(String[] args) {
         A b = new B();

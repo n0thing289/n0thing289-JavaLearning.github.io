@@ -1,3 +1,5 @@
+package five_runtimeException;
+
 public class ArrayIndexOutOfBoundsException_ {
     public static void main(String[] args) {
         int[] arr = {1,2,4};
