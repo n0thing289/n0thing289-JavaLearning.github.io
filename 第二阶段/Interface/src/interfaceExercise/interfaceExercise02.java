@@ -2,7 +2,8 @@ package interfaceExercise;
 
 public class interfaceExercise02 {
     public static void main(String[] args) {
-
+        C c = new C();
+        c.pX();
     }
 
 }
