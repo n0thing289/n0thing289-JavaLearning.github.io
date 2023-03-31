@@ -17,5 +17,6 @@ public class StringExercise01 {
          *      那么直接返回常量池中的abc地址给b
          *      也就是b指向abc
          */
+
     }
 }
