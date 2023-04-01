@@ -1,4 +1,4 @@
-package tempWork;
+package StringClass.tempWork;
 
 public class work06 {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package StringExercise_;
+package StringClass.StringExercise_;
 
 public class StringExercise09 {
     public static void main(String[] args) {

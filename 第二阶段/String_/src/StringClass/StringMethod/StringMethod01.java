@@ -1,4 +1,4 @@
-package StringMethod;
+package StringClass.StringMethod;
 
 public class StringMethod01 {
     public static void main(String[] args) {

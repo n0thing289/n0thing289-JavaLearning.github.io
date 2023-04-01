@@ -1,4 +1,4 @@
-package tempWork;
+package StringClass.tempWork;
 import java.util.Scanner;
 public class work01 {
     public static void main(String[] args) {
