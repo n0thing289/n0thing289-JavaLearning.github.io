@@ -4,14 +4,15 @@ public class StringMethod02 {
     public static void main(String[] args) {
         //1. toUpperCase 返回的结果是修改后的, 这个方法没有修改原来的旧引用,只是把处理后的字符串返回了
         String s = "hello";
-        System.out.println(s.toUpperCase());//Hello
+        System.out.println(s.toUpperCase());//HELLO
         //2. toLowerCase 返回的结果是修改后的, 这个方法没有修改原来的旧引用,只是把处理后的字符串返回了
-        System.out.println(s.toLowerCase());
+        System.out.println(s.toLowerCase());//hello
 
         //3. concat
         String s1 = "宝玉";
         s1 = s1.concat("零待遇").concat("薛宝钗").concat("together");
-        System.out.println(s1);
+        System.out.println(s1);//宝玉零待遇薛宝钗together
+
 
         //4. replace 返回的结果是修改后的, 这个方法没有修改原来的旧引用,只是把处理后的字符串返回了
         s1 = "零待遇 零待遇 零待遇 零待遇";
