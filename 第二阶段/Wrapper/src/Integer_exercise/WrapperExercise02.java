@@ -8,7 +8,7 @@ public class WrapperExercise02 {
 
         /**
          * 首先看清楚左右(左右是不是都是基本数据类型)
-         * 所有判断除自动装箱和手动装箱用的方法 -> 底层都是 xxxx.valueOf();
+         * 所有判断除自动装箱和手动装箱用的方法 -> 自动底层是 xxxx.valueOf();
          * Integer.valueOf() 这个方法比较特殊,-128 ~ 127 都是在已经创建好的Integer数组返回一个对象给你,不在再new
          * 已经创建好了, 给你的只是地址
          */

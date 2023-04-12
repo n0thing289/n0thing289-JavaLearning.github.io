@@ -1,4 +1,4 @@
-package list.ArrayList;
+package list.arraylist_;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ public class ArrayListSource {
     public static void main(String[] args) {
         //用无参构造器创建ArrayList对象
 //        ArrayList list = new ArrayList();
-        ArrayList list = new ArrayList(8);
+        ArrayList list = new ArrayList();
         //使用for给list集合添加0-10
         for(int i=1;i<=10;i++){
             list.add(i);

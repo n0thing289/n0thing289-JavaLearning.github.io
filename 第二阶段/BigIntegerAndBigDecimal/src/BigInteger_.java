@@ -15,7 +15,7 @@ public class BigInteger_ {
 
         //方法来加减乘除
         //加
-        BigInteger add=bigInteger.add(bigInteger2);
+        BigInteger add = bigInteger.add(bigInteger2);
         System.out.println(add);
 
         //减
