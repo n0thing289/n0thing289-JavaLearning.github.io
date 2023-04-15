@@ -6,6 +6,7 @@ public class test01 {
         System.out.println(b.getS2());
         System.out.println(b.getS1());
         System.out.println(b.s2);
+
     }
 }
 
