@@ -30,6 +30,11 @@ public class LinkedHashSetSource {
         //3. 底层结构是(数组＋双向链表)
         //4. 第一次添加的时候,是把table扩容到16; 存放的节点类型是LinkedHashMap$Entry
         //5. HashMap$Node[] 存放的数据是LinkedHashMap$Entry类型, 说明他们之间是由继承的关系(多态数组, 子类对象存放在父类类型的数组中)
+
+        //6. 如果运行类型是LinkedHashSet，那么是会跑到LinkedHashMap的newNode（）方法去new 一个对象；
+        //   而不是父类HashMap的newNode（）
+        //7. LinkedHashMap的newNode()中有linkNodeLast()方法,这个是用来给每一个新增节点建立双向链表的方法
+        //8. 除了新增节点时的两步,其他的和HashMap新增节点的机制一样
     }
 }
 class Customer{
