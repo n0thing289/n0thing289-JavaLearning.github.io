@@ -1,4 +1,4 @@
-package map_;
+package map.quickstart;
 
 import java.util.HashMap;
 import java.util.Map;
