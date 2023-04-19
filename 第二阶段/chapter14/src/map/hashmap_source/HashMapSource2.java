@@ -1,7 +1,6 @@
-package map.source;
+package map.hashmap_source;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 @SuppressWarnings({"all"})
 public class HashMapSource2 {

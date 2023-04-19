@@ -1,4 +1,4 @@
-package map.source;
+package map.hashmap_source;
 
 import java.util.HashMap;
 
