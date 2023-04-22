@@ -7,8 +7,8 @@ import java.util.Iterator;
 @SuppressWarnings({"all"})
 public class Homework01 {
     public static void main(String[] args) {
-        News news01 = new News("1新冠确诊病例超千万，数百万印度教信徒赴恒河\"圣浴\"引民众担忧");
-        News news02 = new News("2男子突然想起两个月前钓的鱼还在鱼兜里,捞起一看赶紧放生");
+        News news01 = new News("新冠确诊病例超千万，数百万印度教信徒赴恒河\"圣浴\"引民众担忧");
+        News news02 = new News("男子突然想起两个月前钓的鱼还在鱼兜里,捞起一看赶紧放生");
         ArrayList arrayList = new ArrayList();
         arrayList.add(news01);
         arrayList.add(news02);
@@ -34,6 +34,10 @@ public class Homework01 {
                 n.setTitle(substring + "...");
                 ok.add(n);
             }
+            else{
+                ok.add(n);
+            }
+
         }
         // 将处理好了的对象再加入到arrlist, 输出处理好了的arraylist
         Iterator iterator = ok.iterator();

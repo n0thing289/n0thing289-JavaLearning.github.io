@@ -1,4 +1,4 @@
-package set.hashset_;
+package set.exercise;
 
 import java.util.HashSet;
 import java.util.Objects;

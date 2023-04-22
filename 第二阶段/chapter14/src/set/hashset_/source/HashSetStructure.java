@@ -1,4 +1,4 @@
-package set.hashset_;
+package set.hashset_.source;
 
 @SuppressWarnings({"all"})
 public class HashSetStructure {

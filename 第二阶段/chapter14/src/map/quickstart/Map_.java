@@ -10,6 +10,7 @@ public class Map_ {
         map.put("no1", "hsp");
         map.put("no2", "zwj");
         map.put("no2", "zwj");
+        map.put(null,null);
         System.out.println(map);
     }
 }

@@ -42,7 +42,7 @@ public class HashMapSource1 {
          *             Node<K,V> e; K k;
          *             if (p.hash == hash && //我先判断hash值是不是相同，
          *             又判断原本位置key(node对象)和现在传进来的key(node对象)是不是一样(判断地址),
-         *             再判断两个key对象的value是不是一样
+         *             再判断两个key对象的value是不是一样(如果equals不重写那么就还是判断是否为同一地址)
          *                 ((k = p.key) == key || (key != null && key.equals(k))))
          *                 e = p;
          *             else if (p instanceof TreeNode)

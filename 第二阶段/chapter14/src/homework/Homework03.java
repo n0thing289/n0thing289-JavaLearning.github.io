@@ -12,9 +12,9 @@ public class Homework03 {
         hashMap.put("smith", 2900);
 
         System.out.println(hashMap);
-        hashMap.put("jack", 2600);
+        hashMap.put("jack", 2600);//替换工资
 
-        Set entryset = hashMap.entrySet();
+        Set entryset = hashMap.entrySet();//取出来的就是一个一个的entry
         for (Object o:entryset){
             Map.Entry entry = (Map.Entry)o;
             Integer newSalary = (Integer)entry.getValue() + 100;
