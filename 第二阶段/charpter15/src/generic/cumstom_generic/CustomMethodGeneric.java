@@ -43,7 +43,7 @@ class Fish<T, R> {
 
     }
 
-    //泛型方法可以使用类声明的泛型,也可以使用方法自己声明的方法
+    //泛型方法可以使用类声明的泛型,也可以使用方法自己声明的泛型
     public <K, V> void hello(R r, K k, V v) {
         System.out.println(r.getClass());
         System.out.println(k.getClass());

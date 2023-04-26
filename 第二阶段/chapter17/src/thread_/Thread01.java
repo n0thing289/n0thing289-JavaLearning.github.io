@@ -10,7 +10,7 @@ public class Thread01 {
          *          start0();
          *      }
          *
-         *      2. 调用本地方法,JVM调用
+         *      2. 调用本地方法,JVM调用start0()
          *      //真正实现多线程
          *      private native void start0();//
          */
