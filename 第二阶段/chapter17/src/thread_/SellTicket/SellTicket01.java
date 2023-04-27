@@ -1,4 +1,4 @@
-package thread_.thread_safety.SellTicket;
+package thread_.SellTicket;
 
 public class SellTicket01 {
     public static void main(String[] args) {

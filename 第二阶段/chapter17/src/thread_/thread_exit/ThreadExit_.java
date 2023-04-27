@@ -22,7 +22,7 @@ class T implements Runnable{
     @Override
     public void run() {
         while (flag){
-            System.out.println("T 运行中" + ++c);
+            System.out.println(" 运行中" + ++c);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

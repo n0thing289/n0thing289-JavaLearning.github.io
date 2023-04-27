@@ -1,4 +1,4 @@
-package thread_;
+package thread_.threaduse;
 
 public class Thread01 {
     public static void main(String[] args) throws InterruptedException {
