@@ -9,7 +9,7 @@ public class ThreadMethod03 {
         thread.start();
 
         for (int i=1;i<=10;i++){
-            System.out.println("宝强在工作--");
+            System.out.println("宝强在工作--" + i);
             Thread.sleep(1000);
         }
     }
