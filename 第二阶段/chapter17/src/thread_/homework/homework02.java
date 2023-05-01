@@ -46,8 +46,9 @@ class User implements Runnable {
                 }
                 double b = card.getBenefit() - 1000;
                 card.setBenefit(b);
+                System.out.println(Thread.currentThread().getName() + "正在取钱, 取后余额: " + card.getBenefit());
             }
-            System.out.println(Thread.currentThread().getName() + "正在取钱, 取后余额: " + card.getBenefit());
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
