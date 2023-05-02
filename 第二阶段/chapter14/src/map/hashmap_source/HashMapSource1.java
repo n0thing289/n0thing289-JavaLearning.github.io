@@ -45,7 +45,7 @@ public class HashMapSource1 {
          *             再判断两个key对象的value是不是一样(如果equals不重写那么就还是判断是否为同一地址)
          *                 ((k = p.key) == key || (key != null && key.equals(k))))
          *                 e = p;
-         *             else if (p instanceof TreeNode)
+         *             else if (p instanceof TreeNode)// 这里是判断旧key-p 是不是树节点,如果是用树节点的方法判断添加处理
          *                 e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
          *             else {// 适用于hash一样,但是值不一样,会将新node挂载到后面
          *                 //挂载的时候会不断的又进行判断下一个next是不是空 或者 下一个next与我当前的node是不是重复
@@ -82,7 +82,7 @@ public class HashMapSource1 {
          *      }
          *
          *      树化代码部分
-         *      //如果table为null, 或者数组的长度没有到64(注意size是加一个node就算包括链表的node)
+         *      //如果table为null, 或者数组的长度没有到64(注意而不是size是加一个node就算包括链表的node)
          *      //暂时先不树化,而是进行扩容
          *      //否则才进行树化
          *      //剪枝: 当你链表已经变成树了, 但是不断的减少,到一定程度后,就会把这颗树又装换成链表
