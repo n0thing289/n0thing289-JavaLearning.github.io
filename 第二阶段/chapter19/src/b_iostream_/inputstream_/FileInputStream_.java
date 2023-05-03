@@ -1,4 +1,4 @@
-package iostream_02.inputstream_;
+package b_iostream_.inputstream_;
 
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class FileInputStream_ {
     //用read(), 读取数据
     @Test
     public void readFile01() {
-        String filePath = "H:\\编程文件\\javase韩顺平\\n0thing289-JavaLearning.github.io\\第二阶段\\chapter19\\src\\iostream_\\inputstream_\\hello.txt";
+        String filePath = "src\\iostream_\\inputstream_\\hello.txt";
         int read;
         FileInputStream fileInputStream = null;
         try {
@@ -38,7 +38,7 @@ public class FileInputStream_ {
     //用read(byte[] b) 读文件
     @Test
     public void readFile02() {
-        String filePath = "H:\\编程文件\\javase韩顺平\\n0thing289-JavaLearning.github.io\\第二阶段\\chapter19\\src\\iostream_\\inputstream_\\hello.txt";
+        String filePath = "src\\iostream_\\inputstream_\\hello.txt";
         int readLen = 0;
         FileInputStream fileInputStream = null;
 

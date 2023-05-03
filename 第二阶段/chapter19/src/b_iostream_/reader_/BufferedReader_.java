@@ -1,4 +1,4 @@
-package iostream_02.reader_;
+package b_iostream_.reader_;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

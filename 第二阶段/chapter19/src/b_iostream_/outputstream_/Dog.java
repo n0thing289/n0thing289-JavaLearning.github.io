@@ -1,4 +1,4 @@
-package iostream_02.outputstream_;
+package b_iostream_.outputstream_;
 
 import java.io.Serializable;
 

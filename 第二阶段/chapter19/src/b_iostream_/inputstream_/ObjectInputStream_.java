@@ -1,4 +1,4 @@
-package iostream_02.inputstream_;
+package b_iostream_.inputstream_;
 
 import java.io.FileInputStream;
 import java.io.IOException;
