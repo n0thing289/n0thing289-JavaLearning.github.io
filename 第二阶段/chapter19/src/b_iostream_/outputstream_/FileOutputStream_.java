@@ -1,4 +1,4 @@
-package iostream_02.outputstream_;
+package b_iostream_.outputstream_;
 
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ public class FileOutputStream_ {
 
     @Test
     public void writeFile01(){
-        String filePath = "H:\\编程文件\\javase韩顺平\\n0thing289-JavaLearning.github.io\\第二阶段\\chapter19\\src\\iostream_\\inputstream_\\a.txt";
+        String filePath = "src\\iostream_\\inputstream_\\a.txt";
         //1. 创建对象
         //2. 准备文件路径
         //3. 处理流

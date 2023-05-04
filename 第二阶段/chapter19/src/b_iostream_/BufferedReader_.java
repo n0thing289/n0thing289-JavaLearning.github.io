@@ -1,9 +1,9 @@
-package iostream_02;
+package b_iostream_;
 
-public class BufferedReader_ extends Reader_ {
-    private Reader_ reader_;
+public class BufferedReader_ extends iostream_02.Reader_ {
+    private iostream_02.Reader_ reader_;
 
-    public BufferedReader_(Reader_ reader_) {
+    public BufferedReader_(iostream_02.Reader_ reader_) {
         this.reader_ = reader_;
     }
     //为了让原本的节点流可用

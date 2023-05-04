@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 @SuppressWarnings({"all"})
 public class ObjectOutputStream_ {
     public static void main(String[] args) throws Exception{
-        String path = "J:\\编程文件\\javase韩顺平\\n0thing289-JavaLearning.github.io\\第二阶段\\chapter19\\src\\iostream_\\outputstream_\\";
+        String path = "src\\b_iostream_\\outputstream_\\";
         String file = "data.dat";// 1. 序列化后保存的文件格式,不是纯文本,而是自己的一套格式保存
         String filepath = path + file;
 

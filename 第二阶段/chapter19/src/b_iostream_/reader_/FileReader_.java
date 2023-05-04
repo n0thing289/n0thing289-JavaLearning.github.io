@@ -1,4 +1,4 @@
-package iostream_02.reader_;
+package b_iostream_.reader_;
 
 import org.junit.Test;
 

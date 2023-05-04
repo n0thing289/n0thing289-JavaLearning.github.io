@@ -16,7 +16,7 @@ public class PrintStream_ {//字节打印流
         out.close();
 
         //修改打印流输出的位置
-        String path = "J:\\编程文件\\javase韩顺平\\n0thing289-JavaLearning.github.io\\第二阶段\\chapter19\\src\\printstream\\";
+        String path = "src\\f_printstream\\";
         String file = "f1.txt";
         String filepath = path + file;
         /**public static void setOut(PrintStream out) {
