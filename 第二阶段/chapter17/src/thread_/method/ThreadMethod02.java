@@ -9,7 +9,7 @@ public class ThreadMethod02 {
             System.out.println("小弟(主线程)吃了 " + i + "包子");
             if(i == 5){
                 System.out.println("小弟吃了5个包子,让子线程先全吃完");
-                thread.yield();
+                thread.join();
                 System.out.println("===老大吃完了,现在轮到我吃===");
             }
         }

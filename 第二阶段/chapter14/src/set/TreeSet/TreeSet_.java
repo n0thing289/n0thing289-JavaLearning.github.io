@@ -15,8 +15,8 @@ public class TreeSet_ {
         TreeSet treeSet = new TreeSet(new Comparator() {
             @Override
             public int compare(Object o1, Object o2) {
-//                return ((String)o2).compareTo((String) o1);
-                return ((String)o2).length() - ((String) o1).length();
+                return ((String)o1).compareTo((String) o2);
+//                return ((String)o2).length() - ((String) o1).length();
             }
         });
         treeSet.add("jack");
