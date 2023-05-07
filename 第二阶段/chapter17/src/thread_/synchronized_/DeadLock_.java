@@ -33,6 +33,7 @@ class DeadLockDemo implements Runnable{
         else{
             synchronized (o2){
                 System.out.println(Thread.currentThread().getName() + "进入3");
+
                 synchronized (o1){
                     System.out.println(Thread.currentThread().getName() + "进入4");
                 }
