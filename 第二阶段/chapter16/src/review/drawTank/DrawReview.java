@@ -13,6 +13,7 @@ public class DrawReview {
 class MyPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         int x = 100;
         int y = 100;
         g.setColor(Color.green);

@@ -1,4 +1,4 @@
-package tanggame;
+package tankgame02;
 
 import javax.swing.*;
 import java.awt.*;

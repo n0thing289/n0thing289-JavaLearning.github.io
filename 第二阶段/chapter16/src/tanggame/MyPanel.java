@@ -3,6 +3,10 @@ package tanggame;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * version 1.0
+ */
 public class MyPanel extends JPanel {
     //定义我的tk
     HeroTank heroTank = null;
@@ -14,13 +18,13 @@ public class MyPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.blue);
-        g.fillRect(100,100, 10, 50);
-        g.fillRect(130,100,10,50);
-        g.fillRect(105,105,30,40);
-        g.fillOval(110,115, 20,20);
-        g.drawLine(120,125-10,120, 80);
-        drawTank(200,200,g,0,0);
+//        g.setColor(Color.blue);
+//        g.fillRect(100,100, 10, 50);
+//        g.fillRect(130,100,10,50);
+//        g.fillRect(105,105,30,40);
+//        g.fillOval(110,115, 20,20);
+//        g.drawLine(120,125-10,120, 80);
+        drawTank(heroTank.getX(),heroTank.getY(),g,0,0);
     }
 
     public void drawTank(int x, int y, Graphics g, int direct, int type){
