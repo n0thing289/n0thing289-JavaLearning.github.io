@@ -1,4 +1,4 @@
-package tankgame02;
+package tankgame03;
 
 import javax.swing.*;
 
@@ -6,7 +6,8 @@ public class HspTankGame02 extends JFrame {
     MyPanel mp = null;
     public HspTankGame02(){
         mp = new MyPanel();
-
+        Thread thread = new Thread(mp);
+        thread.start();
         this.add(mp);
 
         this.setSize(800,400);

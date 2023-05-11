@@ -1,22 +1,23 @@
-package tankgame02;
+package tankgame03;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
  * version 1.0
  */
-public class MyPanel extends JPanel implements KeyListener {
+public class MyPanel extends JPanel implements KeyListener, Runnable {
     //定义我的tk
     HeroTank heroTank = null;
     int direct = 0;
     int enemyTankSize = 3;
     //定义敌人的tk
     Vector<EnemyTank> enemyTanks = new Vector<>(enemyTankSize);
+    //
+    int type = 0;
 
     public MyPanel() {
         //初始化一个堂客
@@ -35,6 +36,7 @@ public class MyPanel extends JPanel implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
+
         super.paint(g);
         drawTank(heroTank.getX(), heroTank.getY(), g, heroTank.getDirect(), 1);
 
@@ -42,7 +44,18 @@ public class MyPanel extends JPanel implements KeyListener {
             EnemyTank enemy = enemyTanks.get(i);
             drawTank(enemy.getX(), enemy.getY(), g, enemy.getDirect(), 0);
         }
-    }
+
+
+        if (heroTank.getBullet() != null && heroTank.getBullet().isLive()) {
+            try {
+                drawBullet(heroTank.getBullet(), g);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+}
 
     public void drawTank(int x, int y, Graphics g, int direct, int type) {
         switch (type) {//  根据坦克设置不同的颜色
@@ -109,6 +122,10 @@ public class MyPanel extends JPanel implements KeyListener {
         }
     }
 
+    public void drawBullet(Bullet bullet, Graphics g) throws InterruptedException {
+        g.fillOval(bullet.getBulletX(), bullet.getBulletY(), 20, 20);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -116,6 +133,7 @@ public class MyPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyCode());
         if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == 83) {/**KeyEvent.VK_DOWN 就是向下箭头对应的code*/
             //向下
             direct = 2;
@@ -144,12 +162,59 @@ public class MyPanel extends JPanel implements KeyListener {
 //            heroTank.setX(heroTank.getX() + 1);
             heroTank.moveRight();
         }
+
+        if (e.getKeyCode() == KeyEvent.VK_J) {
+            //因为炮管头的坐标是随方向变化的,所以我先判断方向再拿到对应的桌标
+            int bulletDirect = -1;
+            int bulletX = -1;
+            int bulletY = -1;
+            switch (heroTank.getDirect()) {
+                case 0:
+                    //向上 x + 20, (y + 30 - 50)
+                    bulletDirect = 0;
+                    bulletX = (heroTank.getX() + 20);
+                    bulletY = (heroTank.getY() + 30 - 50);
+                    break;
+                case 1:
+                    //向右 (x + 30 + 50), y + 20
+                    bulletDirect = 1;
+                    bulletX = (heroTank.getX() + 30 + 50);
+                    bulletY = (heroTank.getY() + 20);
+                    break;
+                case 2:
+                    //向下 x + 20, (y + 30 + 50)
+                    bulletDirect = 2;
+                    bulletX = ((heroTank.getX() + 20));
+                    bulletY = (heroTank.getY() + 30 + 50);
+                    break;
+                case 3:
+                    //向左 (x + 30 - 50), y + 20
+                    bulletDirect = 3;
+                    bulletX = ((heroTank.getX() + 30 - 50));
+                    bulletY = (heroTank.getY() + 20);
+                    break;
+            }
+            heroTank.shot(bulletX, bulletY, bulletDirect);
+            System.out.println("ok");
+        }
         this.repaint();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            this.repaint();
+        }
     }
 }
 
