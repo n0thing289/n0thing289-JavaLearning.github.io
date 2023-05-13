@@ -11,6 +11,7 @@ public class Bullet implements Runnable {
     private int direct = 0;
     private int speed = 2;
     private int fireRange = 400;//射程
+    private boolean isLive = true;
 
     public int getSpeed() {
         return speed;
@@ -28,7 +29,6 @@ public class Bullet implements Runnable {
         isLive = live;
     }
 
-    private boolean isLive = true;
 
     public Bullet(int bulletX, int bulletY, int direct, int fireRange) {
         this.bulletX = bulletX;
@@ -71,6 +71,7 @@ public class Bullet implements Runnable {
 
     @Override
     public void run() {
+
         while (true) {
             try {
                 Thread.sleep(30);
@@ -80,27 +81,38 @@ public class Bullet implements Runnable {
             switch (direct) {
                 case 0:
                     //向上 x + 20, (y + 30 - 50)
+
                     bulletY -= speed;
+
+
                     break;
                 case 1:
                     //向右 (x + 30 + 50), y + 20
+
                     bulletX += speed;
+
                     break;
                 case 2:
                     //向下 x + 20, (y + 30 + 50)
+
                     bulletY += speed;
+
                     break;
                 case 3:
                     //向左 (x + 30 - 50), y + 20
+
                     bulletX -= speed;
+
                     break;
             }
-//            System.out.println("x:" + bulletX + " y:" + bulletY);
-            if (!(bulletX > 0 && bulletX < fireRange && bulletY < fireRange && bulletY > 0)) {
+            //            System.out.println("x:" + bulletX + " y:" + bulletY);
+            if (!(bulletX > 0 && bulletX < HspTankGame02.sizeX && bulletY < HspTankGame02.sizeY && bulletY > 0 && isLive)) {
                 isLive = false;
+                System.out.println("zi dan xian cheng tui chu");
                 break;
             }
         }
+
     }
 
     public int isShot(Tank tank) {
@@ -130,14 +142,14 @@ public class Bullet implements Runnable {
             //x方向上判断
             for (int i = 1; i <= tankWidth; i++) {
                 if (x + i == bulletX) {
-                    System.out.println("在x上击中了");
+//                    System.out.println("在x上击中了");
                     xAy++;
                 }
             }
             //在y方向上判断,只有两个方向都击中,才是真正打中了敌人
             for (int i = 1; i <= tankHeight; i++) {
                 if (y + i == bulletY) {
-                    System.out.println("在y上集中了");
+//                    System.out.println("在y上集中了");
                     xAy++;
                 }
             }
@@ -147,18 +159,19 @@ public class Bullet implements Runnable {
             //x方向上判断
             for (int i = 1; i <= tankWidth; i++) {
                 if (x + i == bulletX) {
-                    System.out.println("在x上击中了");
+//                    System.out.println("在x上击中了");
                     xAy++;
                 }
             }
             //在y方向上判断,只有两个方向都击中,才是真正打中了敌人
             for (int i = 1; i <= tankHeight; i++) {
                 if (y + i == bulletY) {
-                    System.out.println("在y上集中了");
+//                    System.out.println("在y上集中了");
                     xAy++;
                 }
             }
         }
+//        this.isLive = xAy != 2;
         return xAy;
 
     }

@@ -38,7 +38,10 @@ public class HeroTank extends Tank {
 
     //发射子弹方法
     public void shot() {
-
+        //只有5颗打完了才能再打，限制在5颗
+        if(!(bullets.size() < 5)){
+            return;
+        }
         int x = this.getX();
         int y = this.getY();
         int direct = this.getDirect();
@@ -75,14 +78,10 @@ public class HeroTank extends Tank {
         //实现了可以多次点j，发射多个子弹
 
         bullets.add(bullet);
-        for (int i = 0; i < bullets.size(); i++) {
-            if (!(bullets.get(i).isLive())) {//移除打完的子弹
-                bullets.remove(i);
-            }
-            bulletThread = new Thread(bullets.get(i));
-            bulletThread.start();
-        }
-//        System.out.println(bullets.size());
+        bulletThread = new Thread(bullet);
+        bulletThread.start();
+
+        System.out.println(bullets.size());
     }
 
 }

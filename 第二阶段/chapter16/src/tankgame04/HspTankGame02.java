@@ -3,6 +3,8 @@ package tankgame04;
 import javax.swing.*;
 
 public class HspTankGame02 extends JFrame {
+    public static final int sizeX = 1000;
+    public static final int sizeY = 750;
     MyPanel mp = null;
     public HspTankGame02(){
         mp = new MyPanel();
@@ -10,7 +12,7 @@ public class HspTankGame02 extends JFrame {
         thread.start();
         this.add(mp);
 
-        this.setSize(800,400);
+        this.setSize(sizeX,sizeY);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
