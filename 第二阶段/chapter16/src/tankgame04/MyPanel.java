@@ -233,6 +233,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             heroTank.setDirect(direct);
 //            heroTank.setY(heroTank.getY() + 1);
             if (heroTank.getY() > 0) {
+                heroTank.isOverLap(enemyTanks.get(0));
                 heroTank.moveUp();
             }
 

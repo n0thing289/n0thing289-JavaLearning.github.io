@@ -163,7 +163,7 @@ public class EnemyTank extends Tank implements Runnable {
 
             //2. 休眠一会后就改变方向
             setDirect((int) (Math.random() * 4));
-            shot();
+//            shot();
             //3. 做好什么时候结束线程
             if (!isLive) {
                 break;
