@@ -13,9 +13,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     //定义我的tk
     HeroTank heroTank = null;
     int direct = 0;
-    int enemyTankSize = 3;
+    int enemyTankSize = 6;
     //定义敌人的tk们
-    static Vector<EnemyTank> enemyTanks = new Vector<>(3);
+    Vector<EnemyTank> enemyTanks = new Vector<>(enemyTankSize);
     //
     Vector<Image> images = new Vector<>(3);
     Image i1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb01.png"));
@@ -32,6 +32,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         for (int i = 0; i < enemyTankSize; i++) {
             EnemyTank enemyTank = new EnemyTank((100 * (i + 1)), 10);
             enemyTank.setDirect(2);
+            //将enemyTanks设置给enemyTank
+            enemyTank.setEnemyTanks(enemyTanks);
             enemyTanks.add(enemyTank);
             new Thread(enemyTank).start();
         }
@@ -46,6 +48,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         g.setColor(Color.black);
         g.fillRect(0, 0, 1000, 750);
 
+        showInfo(g);
 
         //初始化敌人
         for (int i = 0; i < enemyTanks.size(); i++) {
@@ -63,11 +66,11 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                     drawBullet(currentBullet, g);
                     //敌人射击英雄，我方会消失的功能
                     //判断英雄是否存在
-                    if(!heroTank.isLive()){
+                    if (!heroTank.isLive()) {
                         continue;
                     }
                     int shotFlag = currentBullet.isShot(heroTank);
-                    if (shotFlag == 2){//说明某个敌人的子弹射中了英雄
+                    if (shotFlag == 2) {//说明某个敌人的子弹射中了英雄
                         //就把当前的子弹移除
                         currentBullet.setLive(false);
                         enemyBullets.remove(currentBullet);
@@ -76,7 +79,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                         for (int k = 0; k < images.size(); k++) {
                             Image currentImage = images.get(k);
                             try {
-                                Thread.sleep(1000/60);
+                                Thread.sleep(1000 / 60);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -121,12 +124,13 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                             for (int k = 0; k < images.size(); k++) {
                                 Image currentImage = images.get(k);
                                 try {
-                                    Thread.sleep(1000/60);
+                                    Thread.sleep(1000 / 60);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                                 g.drawImage(currentImage, currentEnemy.getX(), currentEnemy.getY(), 60, 60, this);
                             }
+                            Recorder.addAllEnemyTankNum();
 
                         }
                     }
@@ -135,7 +139,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 }
             }
         }
-
 
 
     }
@@ -233,6 +236,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             heroTank.setDirect(direct);
 //            heroTank.setY(heroTank.getY() + 1);
             if (heroTank.getY() > 0) {
+                heroTank.isOverLap(enemyTanks.get(0));
                 heroTank.moveUp();
             }
 
@@ -278,7 +282,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000/16);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -286,9 +290,15 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-    //拿到敌人的坦克
-    public static Vector<EnemyTank> getEnemyTanks(){
-        return enemyTanks;
+    public void showInfo(Graphics g) {
+        g.setColor(Color.black);
+        //设置字体
+        Font font = new Font("宋体", Font.BOLD, 25);
+        g.setFont(font);
+        g.drawString("您累计击毁敌方坦克", 1020, 30);
+        drawTank(1020, 60, g, 0, 0);
+        g.setColor(Color.black);
+        g.drawString(Recorder.getAllEnemyTankNum() + "", 1090, 100);
     }
 }
 

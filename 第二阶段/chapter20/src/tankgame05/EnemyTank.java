@@ -57,7 +57,7 @@ public class EnemyTank extends Tank implements Runnable {
     }
 
     public void shot() {
-        if(!(bullets.size() < 5)){
+        if (!(bullets.size() < 5)) {
             return;
         }
         int x = this.getX();
@@ -114,13 +114,10 @@ public class EnemyTank extends Tank implements Runnable {
             //  4.1 然后原来的正常运动就不要走了按新方向走
             //让敌人随机动
             //1.在一个方向上先动
-
-            //防止重叠
-            enemyTanks = MyPanel.getEnemyTanks();
             switch (this.getDirect()) {
                 case 0:
                     for (int i = 0; i < 30; i++) {
-                        if (getY() > 0 && !isOverLap(enemyTanks)) {
+                        if (getY() > 0 && !isTouch(enemyTanks)) {
                             moveUp();
                         }
                         try {
@@ -133,7 +130,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case 1:
                     for (int i = 0; i < 30; i++) {
-                        if (getX() < HspTankGame02.sizeX - 60 && !isOverLap(enemyTanks)) {
+                        if (getX() < HspTankGame02.sizeX - 60 && !isTouch(enemyTanks)) {
                             moveRight();
                         }
                         try {
@@ -147,7 +144,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case 2:
                     for (int i = 0; i < 30; i++) {
-                        if (getY()  < HspTankGame02.sizeY - 60 && !isOverLap(enemyTanks)) {
+                        if (getY() < HspTankGame02.sizeY - 60 && !isTouch(enemyTanks)) {
                             moveDown();
                         }
                         try {
@@ -160,7 +157,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case 3:
                     for (int i = 0; i < 30; i++) {
-                        if (getX() > 0 && !isOverLap(enemyTanks)) {
+                        if (getX() > 0 && !isTouch(enemyTanks)) {
                             moveLeft();
                         }
                         try {
@@ -175,7 +172,7 @@ public class EnemyTank extends Tank implements Runnable {
 
             //2. 休眠一会后就改变方向
             setDirect((int) (Math.random() * 4));
-//            shot();
+            shot();
             //3. 做好什么时候结束线程
             if (!isLive) {
                 break;
@@ -186,11 +183,52 @@ public class EnemyTank extends Tank implements Runnable {
 
     }
 
-
-    public boolean isOverLap(Vector<EnemyTank> enemyTanks) {
-
+    public boolean isTouch(Vector<EnemyTank> enemyTanks) {
+        //不断拿到两个坐标（自己的，和对方的）
+        //每次移动前先计算两个参考点的距离
+        for (int i = 0; i < enemyTanks.size(); i++) {
+            Tank tank = enemyTanks.get(i);
+            if (this == tank) {
+                continue;
+            }
+            int otherDirect = tank.getDirect();
+            int x1 = tank.getX() + 20;
+            int y1 = tank.getY() + 30;
+            int x2 = this.getX() + 20;
+            int y2 = this.getY() + 30;
+            int dx = x2 - x1 < 0 ? x1 - x2 : x2 - x1;
+            int dy = y2 - y1 < 0 ? y1 - y2 : y2 - y1;
+            switch (this.getDirect()) {
+                case 0:
+                case 2:
+                    if (otherDirect == 0 || otherDirect == 2) {
+                        if (dy <= 60 + 10 && dx <= 40 + 10) {
+                            return true;
+                        }
+                    } else {
+                        if (dy <= 50 + 10 && dx <= 50 + 10) {
+                            return true;
+                        }
+                    }
+                    break;
+                case 1:
+                case 3:
+                    if (otherDirect == 0 || otherDirect == 2) {
+                        if (dx <= 50 + 10 && dy <= 50 + 10) {
+                            return true;
+                        }
+                    } else {
+                        if (dx <= 60 + 10 && dy <= 40 + 10) {
+                            return true;
+                        }
+                    }
+                    break;
+            }
+        }
         return false;
+
     }
+
 }
 
 

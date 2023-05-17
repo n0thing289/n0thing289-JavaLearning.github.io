@@ -7,6 +7,15 @@ public class EnemyTank extends Tank implements Runnable {
     private Thread bulletThread;
     private Vector<Bullet> bullets = new Vector<>(10);
     private boolean isLive = true;
+    private Vector<EnemyTank> enemyTanks = new Vector<>();
+
+    public Vector<EnemyTank> getEnemyTanks() {
+        return enemyTanks;
+    }
+
+    public void setEnemyTanks(Vector<EnemyTank> enemyTanks) {
+        this.enemyTanks = enemyTanks;
+    }
 
     public boolean isLive() {
         return isLive;
@@ -108,7 +117,7 @@ public class EnemyTank extends Tank implements Runnable {
             switch (this.getDirect()) {
                 case 0:
                     for (int i = 0; i < 30; i++) {
-                        if (getY() > 0) {
+                        if (getY() > 0 && !isTouch(enemyTanks)) {
                             moveUp();
                         }
                         try {
@@ -121,7 +130,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case 1:
                     for (int i = 0; i < 30; i++) {
-                        if (getX() < HspTankGame02.sizeX - 60) {
+                        if (getX() < HspTankGame02.sizeX - 60 && !isTouch(enemyTanks)) {
                             moveRight();
                         }
                         try {
@@ -135,7 +144,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case 2:
                     for (int i = 0; i < 30; i++) {
-                        if (getY()  < HspTankGame02.sizeY - 60) {
+                        if (getY()  < HspTankGame02.sizeY - 60 && !isTouch(enemyTanks)) {
                             moveDown();
                         }
                         try {
@@ -148,7 +157,7 @@ public class EnemyTank extends Tank implements Runnable {
                     break;
                 case 3:
                     for (int i = 0; i < 30; i++) {
-                        if (getX() > 0) {
+                        if (getX() > 0 && !isTouch(enemyTanks)) {
                             moveLeft();
                         }
                         try {
@@ -173,6 +182,73 @@ public class EnemyTank extends Tank implements Runnable {
 
 
     }
+
+    public boolean isTouch(Vector<EnemyTank> enemyTanks) {
+        //不断拿到两个坐标（自己的，和对方的）
+        //每次移动前先计算两个参考点的距离
+        for (int i = 0; i < enemyTanks.size(); i++) {
+            Tank tank = enemyTanks.get(i);
+            if(this == tank){
+                continue;
+            }
+            int otherDirect = tank.getDirect();
+            int x1 = tank.getX();
+            int y1 = tank.getY();
+            int x2 = this.getX();
+            int y2 = this.getY();
+            int dx = x2 - x1;
+            int dy = y2 - y1;
+            switch (this.getDirect()) {
+                case 0:
+                    if (otherDirect == 0 || otherDirect == 2) {
+                        if (((y2 - y1) <= 60) && (((x2 - x1) < 40 || (x2 - x1) > -40))) {
+                            return true;
+                        }
+                    } else {
+                        if (((y2 - y1) <= 40) && (((x2 - x1) < 60 || (x2 - x1) > -40))) {
+                            return true;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (otherDirect == 0 || otherDirect == 2) {
+                        if (dy >= -60 && ((x2 - x1) < 40 || (x1 - x2) < 40)) {
+                            return true;
+                        }
+                    } else {
+                        if (dy >= -60 && ((x2 - x1 < 60 || (x1 - x2) < 40))) {
+                            return true;
+                        }
+                    }
+                    break;
+                case 1:
+                    if (otherDirect == 0 || otherDirect == 2) {
+                        if ((x1 - x2) <= 60 && ((y1 - y2) < 40 || (y2 - y1) < 60)) {
+                            return true;
+                        }
+                    } else {
+                        if ((x1 - x2) <= 60 && ((y1 - y2) < 40 || (y2 - y1) < 40)) {
+                            return true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (otherDirect == 0 || otherDirect == 2) {
+                        if ((x2 - x1) <= 40 && ((y1 - y2) < 40 || (y2 - y1) < 60)) {
+                            return true;
+                        }
+                    } else {
+                        if ((x2 - x1) <= 60 && ((y1 - y2) < 40 || (y2 - y1) < 40)) {
+                            return true;
+                        }
+                    }
+                    break;
+            }
+        }
+        return false;
+
+    }
+
 }
 
 

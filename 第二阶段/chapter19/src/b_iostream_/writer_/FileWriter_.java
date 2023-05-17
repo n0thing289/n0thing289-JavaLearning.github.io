@@ -1,4 +1,4 @@
-package iostream_02.writer_;
+package b_iostream_.writer_;
 
 import org.junit.Test;
 

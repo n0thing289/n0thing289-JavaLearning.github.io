@@ -7,8 +7,6 @@ public class HeroTank extends Tank {
     private Thread bulletThread;
     private Vector<Bullet> bullets = new Vector<>(10);
 
-
-
     public HeroTank(int x, int y) {
         super(x, y);
     }

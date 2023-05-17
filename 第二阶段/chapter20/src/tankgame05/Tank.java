@@ -198,7 +198,7 @@ public class Tank {
 
     }
 
-    public boolean isOverLap(Tank tank) {
+    public void isOverLap(Tank tank) {
         //不断拿到两个坐标（自己的，和对方的）
         //每次移动前先计算两个参考点的距离
         int otherDirect = tank.getDirect();
@@ -212,49 +212,48 @@ public class Tank {
             case 0:
                 if (otherDirect == 0 || otherDirect == 2) {
                     if (((y2 - y1) <= 60) && (((x2 - x1) < 40 || (x2 - x1) > -40))) {
-                        return true;
+                        System.out.println("shuzhi重叠了");
                     }
                 } else {
                     if (((y2 - y1) <= 40) && (((x2 - x1) < 60 || (x2 - x1) > -40))) {
-                       return true;
+                        System.out.println("水平重叠了");
                     }
                 }
                 break;
             case 2:
                 if (otherDirect == 0 || otherDirect == 2) {
                     if (dy >= -60 && ((x2 - x1) < 40 || (x1 - x2) < 40)) {
-                        return true;
+                        System.out.println("333");
                     }
                 } else {
                     if (dy >= -60 && ((x2 - x1 < 60 || (x1 - x2) < 40))) {
-                        return true;
+                        System.out.println("444");
                     }
                 }
                 break;
             case 1:
                 if (otherDirect == 0 || otherDirect == 2) {
                     if ((x1 - x2) <= 60 && ((y1 - y2) < 40 || (y2 - y1) < 60)) {
-                        return true;
+                        System.out.println("555");
                     }
                 } else {
                     if ((x1 - x2) <= 60 && ((y1 - y2) < 40 || (y2 - y1) < 40)) {
-                        return true;
+                        System.out.println("666");
                     }
                 }
                 break;
             case 3:
                 if (otherDirect == 0 || otherDirect == 2) {
                     if ((x2 - x1) <= 40 && ((y1 - y2) < 40 || (y2 - y1) < 60)) {
-                        return true;
+                        System.out.println("777");
                     }
                 } else {
                     if ((x2 - x1) <= 60 && ((y1 - y2) < 40 || (y2 - y1) < 40)) {
-                        return true;
+                        System.out.println("888");
                     }
                 }
                 break;
         }
-        return false;
     }
 }
 
