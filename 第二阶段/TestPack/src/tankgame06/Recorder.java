@@ -1,4 +1,4 @@
-package tankgame05;
+package tankgame06;
 
 import java.io.*;
 import java.util.Vector;
@@ -7,7 +7,7 @@ public class Recorder {
     private static int allEnemyTankNum = 0;
 
     //
-    private static String filepath = "src\\tankgame05\\recordData.txt";
+    private static String filepath = "src\\recordData.txt";
 
     private static FileWriter fw = null;
     private static BufferedWriter bw = null;
@@ -78,7 +78,7 @@ public class Recorder {
         String read = null;
 
         int deadEnemyTankSize = -1;
-        int x, y, direct = -1;
+        int x, y, direct;
         nodes = new Vector<>();
         try {
             br = new BufferedReader(new FileReader(filepath));
@@ -100,11 +100,17 @@ public class Recorder {
                 Node node = new Node(x,y,direct);
                 nodes.add(node);
             }
+        }catch (FileNotFoundException e){
+            System.out.println("没有继续上局的记录, 新游戏开始");
+//            System.exit(0);//如果没有记录文件,就直接关闭程序
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                br.close();
+                if(br != null){
+                    br.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

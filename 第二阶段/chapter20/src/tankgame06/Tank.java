@@ -1,4 +1,4 @@
-package tankgame05;
+package tankgame06;
 
 public class Tank {
     private int x;
@@ -95,8 +95,8 @@ public class Tank {
         //3. 每次运动之前就先判断有没有到边界
         //4. 如果到了就立马随机换方向
 
-        int windowWidth = HspTankGame02.sizeX;
-        int windowHeight = HspTankGame02.sizeY;
+        int windowWidth = HspTankGame06.sizeX;
+        int windowHeight = HspTankGame06.sizeY;
         switch (type) {
             case "hero":
                 break;

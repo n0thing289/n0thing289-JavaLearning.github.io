@@ -1,4 +1,4 @@
-package tankgame05;
+package tankgame06;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +27,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     Vector<Node> nodes = new Vector<>();
 
     public MyPanel(String key) {
+        nodes = Recorder.readRecord();
+        if(nodes == null){
+            key = "1";
+        }
         //初始化一个堂客
         heroTank = new HeroTank(100, 100);
         //给坦克设置速度
@@ -45,7 +49,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 }
                 break;
             case "2":
-                nodes = Recorder.readRecord();
+
 
                 for (int i = 0; i < nodes.size(); i++) {
                     EnemyTank enemyTank = new EnemyTank(nodes.get(i).getX(), nodes.get(i).getY());
@@ -234,7 +238,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void drawBullet(Bullet bullet, Graphics g) {
-        g.fillOval(bullet.getBulletX(), bullet.getBulletY(), 20, 20);
+        g.fillOval(bullet.getBulletX(), bullet.getBulletY(), 2, 2);
     }
 
     @Override
@@ -250,7 +254,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             direct = 2;
             heroTank.setDirect(direct);
 //            heroTank.setY(heroTank.getY() + 1);
-            if (heroTank.getY() < HspTankGame02.sizeY - 60) {
+            if (heroTank.getY() < HspTankGame06.sizeY - 60) {
                 heroTank.moveDown();
             }
 
@@ -280,7 +284,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             direct = 1;
             heroTank.setDirect(direct);
 //            heroTank.setX(heroTank.getX() + 1);
-            if (heroTank.getX() < HspTankGame02.sizeX - 60) {
+            if (heroTank.getX() < HspTankGame06.sizeX - 60) {
                 heroTank.moveRight();
             }
 
