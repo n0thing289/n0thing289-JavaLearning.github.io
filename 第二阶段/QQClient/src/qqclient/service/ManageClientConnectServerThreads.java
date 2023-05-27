@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * 管理客户端连接到服务端线程的类
  */
-public class ManageClientConnectServerThread {
+public class ManageClientConnectServerThreads {
     //把多线程放入HashMap集合, key就是用户id,value就是线程
     private static HashMap<String, ClientConnectServerThread> hm = new HashMap<>();
 

@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class UI {
 
     private boolean loop = true;
+    private static boolean loopV2 = true;
     //标题字符串属性
     public static final String titleV1 = "==========欢迎登录网络通信系统==========";
     public static final String functionType =
@@ -62,6 +63,9 @@ public class UI {
     public void showUIv2() {
         /*二级菜单*/
         while (loop) {
+            if(!loopV2){
+                continue;
+            }
             titleV2 = "==========网络通信系统二级菜单（用户 " + receivedUserId + "）==========";
             System.out.println("\n" + titleV2);
             System.out.println(functionTypeV2);
@@ -71,6 +75,7 @@ public class UI {
             switch (receivedUserChose){
                 case "1":
                     System.out.println("显示在线用户列表");
+                    userClientService.getOnlineFriendList();
                     break;
                 case "2":
                     System.out.println("群发消息");
@@ -94,4 +99,11 @@ public class UI {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         new UI().showUIv1();
     }
+
+    public static void setLoopV2(boolean loopV2) {
+        UI.loopV2 = loopV2;
+    }
 }
+/**
+ * 刚刚报EOF错误, 是因为shutdown()以及跟套接字有关的流被关闭
+ * */

@@ -1,5 +1,6 @@
 package qqclient.service;
 
+import qqclient.view.UI;
 import qqcommon.Message;
 import qqcommon.MessageType;
 import qqcommon.User;
@@ -43,11 +44,12 @@ public class UserClientService {
         ObjectOutputStream oos_socket = new ObjectOutputStream(socket.getOutputStream());
         oos_socket.writeObject(user);
         oos_socket.flush();
-        socket.shutdownOutput();
+//        socket.shutdownOutput();
 
         //2.2.3 接收服务器返回的Message对象
         ObjectInputStream ois_socket = new ObjectInputStream(socket.getInputStream());
         Message msg = (Message) ois_socket.readObject();
+        System.out.println(msg);
         if (MessageType.MESSAGE_LOGIN_SUCCEED.equals(msg.getMesType())) {
             System.out.println("登录成功");
 
@@ -56,17 +58,53 @@ public class UserClientService {
             ccstThread.start();
 
             //为了后面客户端的扩展/线程管理, 把线程放入到集合中管理
-            ManageClientConnectServerThread.addClientConnectServerThread(id, ccstThread);
+            ManageClientConnectServerThreads.addClientConnectServerThread(id, ccstThread);
             b = true;
         } else {
             //如果登录失败, 就不能启动和服务器通信的线程,关闭socket
             socket.close();
         }
         //2.2.3 （暂时关闭）关闭套接字和流
-        oos_socket.close();
-        ois_socket.close();
+//        oos_socket.close();
+//        ois_socket.close();
         //3. 接收服务器传回来的数据
         return b;
+    }
+
+    //向服务器请求在线用户列表
+    public void getOnlineFriendList(){
+        UI.setLoopV2(false);
+        //发送
+        Message message = new Message();
+        message.setMesType(MessageType.MESSAGE_GET_ONLINE_FRIEND);
+        message.setSender(user.getUserId());
+        //发送给服务器
+        //得到当前线程socket对应的ObjectOutputStream对象
+        try {
+            //根据id拿到对应线程
+            ClientConnectServerThread ccst = ManageClientConnectServerThreads.getClientConnectServerThread(user.getUserId());
+            //根据对应的线程拿到套接字
+            Socket ccstSocket = ccst.getSocket();
+            ObjectOutputStream oos = new ObjectOutputStream(ccstSocket.getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exitQq(String userId){
+        ClientConnectServerThread ccst = ManageClientConnectServerThreads.getClientConnectServerThread(userId);
+        Socket ccstSocket = ccst.getSocket();
+        try {
+            Message exitMsg = new Message();
+            exitMsg.setMesType(MessageType.MESSAGE_CLIENT_EXIT);
+            exitMsg.setSender(userId);
+            ObjectOutputStream oos = new ObjectOutputStream(ccstSocket.getOutputStream());
+            oos.writeObject(exitMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ccst.setLive(false);
     }
 
 }

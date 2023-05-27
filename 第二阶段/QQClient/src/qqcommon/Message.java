@@ -53,4 +53,15 @@ public class Message implements Serializable {
     public void setMesType(String mesType) {
         this.mesType = mesType;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "sender='" + sender + '\'' +
+                ", getter='" + getter + '\'' +
+                ", content='" + content + '\'' +
+                ", sendTime='" + sendTime + '\'' +
+                ", mesType='" + mesType + '\'' +
+                '}';
+    }
 }
