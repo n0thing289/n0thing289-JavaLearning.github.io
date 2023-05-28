@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-public class ClientConnectServerThread extends Thread{
+public class ClientConnectServerThread extends Thread {
     private Socket socket;
     private boolean isLive = true;
+
     public ClientConnectServerThread(Socket socket) {
         this.socket = socket;
     }
@@ -19,7 +20,7 @@ public class ClientConnectServerThread extends Thread{
     public void run() {
         //一直在后台读数据,或者写数据,因此做成无限循环
         while (isLive) {
-            System.out.println("客户端线程, 等待读取数据");
+//            System.out.println("客户端线程, 等待读取数据");
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
@@ -36,6 +37,9 @@ public class ClientConnectServerThread extends Thread{
                         System.out.println("用户: " + online_users[i]);
                     }
                     UI.setLoopV2(true);
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_RET_PRIVATE_CHAT)) {
+                    //接收那个用户发送的数据包
+                    System.out.printf("\t\t\t\t\t\t\t\t\t\t%s >>> %s: %s\n", msg.getSender(), msg.getGetter(), msg.getContent());
                 } else {
                     //
                     System.out.println("msg是其他类型的message, 暂时不处理");
@@ -44,13 +48,17 @@ public class ClientConnectServerThread extends Thread{
                 e.printStackTrace();
             }
         }
-        try {
-
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            socket.shutdownInput();
+//            socket.shutdownOutput();
+//            socket.close();
+//            System.out.println("读取数据的线程退出。。。");
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
+
     //为了更方便拿到套接字,提供套接字
     public Socket getSocket() {
         return socket;
@@ -67,4 +75,5 @@ public class ClientConnectServerThread extends Thread{
     public void setLive(boolean live) {
         isLive = live;
     }
+
 }

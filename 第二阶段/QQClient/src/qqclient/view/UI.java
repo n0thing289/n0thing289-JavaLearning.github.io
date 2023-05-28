@@ -82,6 +82,7 @@ public class UI {
                     break;
                 case "3":
                     System.out.println("私聊消息");
+                    userClientService.privateChat();
                     break;
                 case "4":
                     System.out.println("发送文件");
@@ -89,6 +90,7 @@ public class UI {
                 case "9":
                     System.out.println("退出系统");
                     loop = false;
+                    userClientService.exitQQ(receivedUserId);
                     break;
                 default:
                     System.out.println("输入有误，重新输入？");

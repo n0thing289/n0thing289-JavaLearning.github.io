@@ -24,6 +24,9 @@ public class QQServer {
         validUsers.put("100", new User("100", "123456"));
         validUsers.put("200", new User("200", "123456"));
         validUsers.put("300", new User("300", "123456"));
+        validUsers.put("至尊宝", new User("至尊宝", "123456"));
+        validUsers.put("紫霞仙子", new User("紫霞仙子", "123456"));
+        validUsers.put("菩提老祖", new User("菩提老祖","123456"));
     }
 
     private boolean checkUser(String userId,String password){

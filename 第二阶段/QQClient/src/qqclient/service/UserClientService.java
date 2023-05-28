@@ -8,6 +8,7 @@ import qqcommon.User;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * 该类完成用户登录验证和用户注册等功能
@@ -72,7 +73,7 @@ public class UserClientService {
     }
 
     //向服务器请求在线用户列表
-    public void getOnlineFriendList(){
+    public void getOnlineFriendList() {
         UI.setLoopV2(false);
         //发送
         Message message = new Message();
@@ -92,19 +93,66 @@ public class UserClientService {
         }
     }
 
-    public void exitQq(String userId){
+    public void exitQQ(String userId) {
+        //拿到对应的线程，及其对应的套接字
         ClientConnectServerThread ccst = ManageClientConnectServerThreads.getClientConnectServerThread(userId);
         Socket ccstSocket = ccst.getSocket();
         try {
+            //发送客户端退出的消息
             Message exitMsg = new Message();
             exitMsg.setMesType(MessageType.MESSAGE_CLIENT_EXIT);
             exitMsg.setSender(userId);
             ObjectOutputStream oos = new ObjectOutputStream(ccstSocket.getOutputStream());
             oos.writeObject(exitMsg);
+            System.out.println(userId + "退出系统");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ccst.setLive(false);
+//        ccst.setLive(false);
+        System.exit(0);
     }
 
+    //这里写一个私聊的方法
+    public void privateChat() {
+        Scanner scanner = new Scanner(System.in);
+        //开始私聊
+        //私聊谁->拿到那个用户的套接字
+
+        //提示用户,拿到目标用户名
+        System.out.println("正在开启私聊连接");
+        System.out.print("你要和谁私聊(-1退出私聊): ");
+        String destUserId = scanner.next();
+        System.out.println("==========正在与" + destUserId + "聊天==========");
+        String contains = null;
+
+        ClientConnectServerThread ccst = null ;
+        while (true){
+            System.out.printf("%s <<< %s: ", destUserId, user.getUserId());
+            contains = scanner.next();
+            System.out.print("\n");
+
+            Message chatMsg = new Message();
+            chatMsg.setMesType(MessageType.MESSAGE_GET_PRIVATE_CHAT);
+            chatMsg.setSender(user.getUserId());
+            chatMsg.setGetter(destUserId);
+            chatMsg.setContent(contains);
+
+            try {
+                //发送数据包给服务器
+                //拿到当前用户的套接字进行发送数据
+                ccst = ManageClientConnectServerThreads.getClientConnectServerThread(user.getUserId());
+                Socket ccstSocket = ccst.getSocket();
+                ObjectOutputStream oos = new ObjectOutputStream(ccstSocket.getOutputStream());
+                oos.writeObject(chatMsg);
+                if("-1".equals(contains)){
+                    break;
+                }
+                //这里就先一直进行监听私聊信息
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
 }
