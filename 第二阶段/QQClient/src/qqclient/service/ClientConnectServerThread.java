@@ -39,7 +39,9 @@ public class ClientConnectServerThread extends Thread {
                     UI.setLoopV2(true);
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_RET_PRIVATE_CHAT)) {
                     //接收那个用户发送的数据包
-                    System.out.printf("\t\t\t\t\t\t\t\t\t\t%s >>> %s: %s\n", msg.getSender(), msg.getGetter(), msg.getContent());
+                    System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[私聊消息]%s >>> %s: %s\n>", msg.getSender(), msg.getGetter(), msg.getContent());
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
+                    System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[群发消息]%s 对 %s: %s\n>", msg.getSender(), "大家说", msg.getContent());
                 } else {
                     //
                     System.out.println("msg是其他类型的message, 暂时不处理");

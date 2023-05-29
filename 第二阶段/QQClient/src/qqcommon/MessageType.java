@@ -9,6 +9,9 @@ public interface MessageType {
     public static final String MESSAGE_CLIENT_EXIT = "6";//客户端请求退出
     public static final String MESSAGE_GET_PRIVATE_CHAT = "7";//客户端请求私聊
     public static final String MESSAGE_RET_PRIVATE_CHAT = "8";//服务器返回私聊的消息
+    public static final String MESSAGE_SEND_FILE = "9";//告诉服务器准备发送文件的消息
+    public static final String MESSAGE_READY_TRANSFER_FILE = "10";//告诉服务器准备发送文件的消息
+    public static final String MESSAGE_RECEIVE_FILE = "11";//服务器返回私聊的消息
 
 
 

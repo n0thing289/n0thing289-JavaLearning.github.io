@@ -3,6 +3,7 @@ package qqserver.service;
 import qqcommon.Message;
 import qqcommon.MessageType;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -26,7 +27,7 @@ public class ServerConnectClientThread extends Thread {
         //让这个套接字一直监听某个客户端
         while (true) {
             try {
-                System.out.println("服务端和"+userId+"客户端保持通信, 读取数据");
+                System.out.println("服务端和" + userId + "客户端保持通信, 读取数据");
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
 
@@ -87,6 +88,31 @@ public class ServerConnectClientThread extends Thread {
                         //这里日后在设置一个消息类型-让发送者自动退出私聊
                     }
 
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
+                    String onlineUsers = ManageServerConnectClientThreads.getOnlineUsers();//return "用户A 用户B 用户C"
+                    String[] onlineUsersArr = onlineUsers.split(" ");
+                    String src = msg.getSender();
+                    String content = msg.getContent();
+
+                    Message pubChatMsg = new Message();
+                    pubChatMsg.setSender(src);
+                    pubChatMsg.setContent(content);
+                    pubChatMsg.setMesType(MessageType.MESSAGE_COMM_MES);
+
+                    for (int i = 0; i < onlineUsersArr.length; i++) {
+                        String currentDestUserId = onlineUsersArr[i];
+                        if (currentDestUserId.equals(src)) {
+                            continue;
+                        }
+                        ServerConnectClientThread scct = ManageServerConnectClientThreads.getServerConnectClientThread(currentDestUserId);
+                        Socket scctSocket = scct.getSocket();
+
+                        try {
+                            new ObjectOutputStream(scctSocket.getOutputStream()).writeObject(pubChatMsg);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 } else {
                     System.out.println("其他类型的message, 暂时不处理");
                 }

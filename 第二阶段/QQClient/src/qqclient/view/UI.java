@@ -79,9 +79,9 @@ public class UI {
                     break;
                 case "2":
                     System.out.println("群发消息");
+                    userClientService.publicChat();
                     break;
                 case "3":
-                    System.out.println("私聊消息");
                     userClientService.privateChat();
                     break;
                 case "4":

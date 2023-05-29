@@ -115,7 +115,6 @@ public class UserClientService {
     //这里写一个私聊的方法
     public void privateChat() {
         Scanner scanner = new Scanner(System.in);
-        //开始私聊
         //私聊谁->拿到那个用户的套接字
 
         //提示用户,拿到目标用户名
@@ -123,12 +122,13 @@ public class UserClientService {
         System.out.print("你要和谁私聊(-1退出私聊): ");
         String destUserId = scanner.next();
         System.out.println("==========正在与" + destUserId + "聊天==========");
-        String contains = null;
 
-        ClientConnectServerThread ccst = null ;
-        while (true){
+        while (true) {
             System.out.printf("%s <<< %s: ", destUserId, user.getUserId());
-            contains = scanner.next();
+            String contains = scanner.next();
+            if ("-1".equals(contains)) {
+                break;
+            }
             System.out.print("\n");
 
             Message chatMsg = new Message();
@@ -140,19 +140,74 @@ public class UserClientService {
             try {
                 //发送数据包给服务器
                 //拿到当前用户的套接字进行发送数据
-                ccst = ManageClientConnectServerThreads.getClientConnectServerThread(user.getUserId());
+                ClientConnectServerThread ccst = ManageClientConnectServerThreads.getClientConnectServerThread(user.getUserId());
                 Socket ccstSocket = ccst.getSocket();
                 ObjectOutputStream oos = new ObjectOutputStream(ccstSocket.getOutputStream());
                 oos.writeObject(chatMsg);
-                if("-1".equals(contains)){
-                    break;
-                }
                 //这里就先一直进行监听私聊信息
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
 
 
     }
+
+    public void publicChat() {
+        /*群发消息（对所有在线用户发信息）先实现全部人都发
+          1. 发送群聊数据包
+
+        * */
+        System.out.println("==========正在对大家聊天==========");
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+
+            System.out.print("<<<: ");
+            String publicContent = scan.next();
+            if ("-1".equals(publicContent)) {
+                break;
+            }
+            Message pubChatMsg = new Message();
+            pubChatMsg.setMesType(MessageType.MESSAGE_COMM_MES);
+            pubChatMsg.setSender(user.getUserId());
+            pubChatMsg.setContent(publicContent);
+
+            try {
+                ClientConnectServerThread ccst = ManageClientConnectServerThreads.getClientConnectServerThread(user.getUserId());
+                Socket ccstSocket = ccst.getSocket();
+                ObjectOutputStream oos = new ObjectOutputStream(ccstSocket.getOutputStream());
+                oos.writeObject(pubChatMsg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    public void sendFile() {
+        Scanner scan = new Scanner(System.in);
+        //拿到文件路径
+        System.out.print("请输入您想发送文件的绝对地址:");
+        String filepath = scan.next();
+
+        System.out.print("你要发给谁:");
+        String destUserId = scan.next();
+
+        File file = new File(filepath);
+        if (file.exists()) {
+            //启动线程去发给服务器
+            ClientCopeWithFileThread cwft = new ClientCopeWithFileThread();
+            cwft.setFilepath(filepath);
+            cwft.setFuncName("sendFileMode");
+            cwft.setUserId(user.getUserId());
+            cwft.setDestUserId(destUserId);
+            cwft.start();
+        } else {
+            System.out.println("文件不存在,请重试");
+        }
+
+    }
+
 }
