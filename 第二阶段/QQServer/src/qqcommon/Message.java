@@ -14,13 +14,7 @@ public class Message implements Serializable {
     private String sendTime;
     private String mesType;
 
-    public Message(String sender, String getter, String content, String sendTime, String mesType) {
-        this.sender = sender;
-        this.getter = getter;
-        this.content = content;
-        this.sendTime = sendTime;
-        this.mesType = mesType;
-    }
+
 
     public Message() {
     }

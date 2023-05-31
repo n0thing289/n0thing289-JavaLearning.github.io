@@ -6,6 +6,8 @@ import qqcommon.MessageType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class ClientConnectServerThread extends Thread {
@@ -41,6 +43,33 @@ public class ClientConnectServerThread extends Thread {
                     //接收那个用户发送的数据包
                     System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[私聊消息]%s >>> %s: %s\n>", msg.getSender(), msg.getGetter(), msg.getContent());
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
+                    System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[群发消息]%s 对 %s: %s\n>", msg.getSender(), "大家说", msg.getContent());
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_RECEIVE_FILE)) {
+                    //拆包
+                    String src = msg.getSender();
+                    String dest = msg.getGetter();
+                    String content = msg.getContent();
+                    //回复客户端准备就绪
+                    Message resStatueToServerMsg = new Message();
+                    resStatueToServerMsg.setSender(src);
+                    resStatueToServerMsg.setGetter(dest);
+                    resStatueToServerMsg.setMesType(MessageType.MESSAGE_READY_TRANSFER_FILE);
+
+                    Socket filesocket = new Socket(InetAddress.getLocalHost(), 8080);
+//                    Socket resSocket = ManageClientConnectServerThreads.getClientConnectServerThread(dest).getSocket();
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(filesocket.getOutputStream());
+                    objectOutputStream.writeObject(resStatueToServerMsg);
+                    //创建接收文件的套接字， 并且开器线程
+
+                    ClientCopeWithFileThread receiveFileThread = new ClientCopeWithFileThread(filesocket, "receiveFileMode", content, src, dest);
+                    ManageClientConnectServerThreads.addClientConnectServerThread(dest, receiveFileThread);
+                    new Thread(receiveFileThread).start();
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_SERVER_PUSH)) {
+                    //拆包
+                    String src = msg.getSender();
+                    String dest = msg.getGetter();
+                    String content = msg.getContent();
+
                     System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[群发消息]%s 对 %s: %s\n>", msg.getSender(), "大家说", msg.getContent());
                 } else {
                     //

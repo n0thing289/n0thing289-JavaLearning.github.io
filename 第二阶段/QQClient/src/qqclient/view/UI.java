@@ -86,6 +86,7 @@ public class UI {
                     break;
                 case "4":
                     System.out.println("发送文件");
+                    userClientService.sendFile();
                     break;
                 case "9":
                     System.out.println("退出系统");

@@ -196,14 +196,31 @@ public class UserClientService {
         String destUserId = scan.next();
 
         File file = new File(filepath);
-        if (file.exists()) {
-            //启动线程去发给服务器
-            ClientCopeWithFileThread cwft = new ClientCopeWithFileThread();
-            cwft.setFilepath(filepath);
-            cwft.setFuncName("sendFileMode");
-            cwft.setUserId(user.getUserId());
-            cwft.setDestUserId(destUserId);
-            cwft.start();
+        if (true) {
+
+            try {
+                //用新套接字连接服务器，并发送 文件消息
+                Message preparationMsg = new Message();
+                preparationMsg.setSender(user.getUserId());
+                preparationMsg.setGetter(destUserId);
+                preparationMsg.setContent(filepath);
+                preparationMsg.setMesType(MessageType.MESSAGE_SEND_FILE);
+
+                Socket filesocket = new Socket(InetAddress.getLocalHost(), 8080);
+                new ObjectOutputStream(filesocket.getOutputStream()).writeObject(preparationMsg);
+//                new MyObjectOutputStream(filesocket.getOutputStream()).writeObject(preparationMsg);
+
+                ObjectInputStream objectInputStream = new ObjectInputStream(filesocket.getInputStream());
+                Message readyMsg = (Message) (new ObjectInputStream(filesocket.getInputStream())).readObject();
+                if(readyMsg.getMesType().equals(MessageType.MESSAGE_READY_TRANSFER_FILE)){
+                    //开线程给服务器发送数据
+                    ClientCopeWithFileThread sendFileThread = new ClientCopeWithFileThread(filesocket, "sendFileMode", filepath, user.getUserId(), destUserId);
+                    new Thread(sendFileThread).start();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } else {
             System.out.println("文件不存在,请重试");
         }
@@ -211,3 +228,28 @@ public class UserClientService {
     }
 
 }
+
+class MyObjectOutputStream extends ObjectOutputStream {
+
+    public MyObjectOutputStream(OutputStream out) throws IOException {
+        super(out);
+    }
+
+    @Override
+    protected void writeStreamHeader() throws IOException {
+        //重写读取头部信息方法：不写入头部信息
+        super.reset();
+    }
+}
+
+class MyObjectInputStream extends ObjectInputStream {
+    public MyObjectInputStream(InputStream in) throws IOException {
+        super(in);
+    }
+
+    @Override
+    protected void readStreamHeader() throws IOException {
+        //重写读取头部信息方法：什么也不做
+    }
+}
+

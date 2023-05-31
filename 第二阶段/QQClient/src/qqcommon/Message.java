@@ -14,6 +14,8 @@ public class Message implements Serializable {
     private String sendTime;
     private String mesType;
 
+    public Message() {
+    }
     public String getSender() {
         return sender;
     }

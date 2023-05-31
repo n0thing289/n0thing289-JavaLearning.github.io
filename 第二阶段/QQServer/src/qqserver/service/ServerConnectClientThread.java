@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Map;
 
 
 /**
@@ -113,7 +112,10 @@ public class ServerConnectClientThread extends Thread {
                             e.printStackTrace();
                         }
                     }
-                } else {
+                }else if (msg.getMesType().equals(MessageType.MESSAGE_SEND_FILE)){
+                    System.out.println("MESSAGE_SEND_FILE");
+                }
+                else {
                     System.out.println("其他类型的message, 暂时不处理");
                 }
             } catch (Exception e) {

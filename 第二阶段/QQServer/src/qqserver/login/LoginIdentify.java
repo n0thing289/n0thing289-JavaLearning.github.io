@@ -1,6 +1,6 @@
 package qqserver.login;
 
-import org.junit.Test;
+//import org.junit.Test;
 import qqcommon.Message;
 import qqcommon.User;
 
@@ -14,7 +14,7 @@ import java.util.HashMap;
  * 与客户端的登录验证有关功能
  * */
 public class LoginIdentify {
-    @Test
+
     public void toClientLoginIdentify() throws IOException, ClassNotFoundException {
         //1. 接收并保存dat数据包
         //1.2 创建套接字，关闭套接字

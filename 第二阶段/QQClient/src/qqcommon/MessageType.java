@@ -13,6 +13,7 @@ public interface MessageType {
     public static final String MESSAGE_READY_TRANSFER_FILE = "10";//告诉服务器准备发送文件的消息
     public static final String MESSAGE_RECEIVE_FILE = "11";//服务器返回私聊的消息
 
+    public static final String MESSAGE_SERVER_PUSH = "12";
 
 
 }
