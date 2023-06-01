@@ -29,6 +29,9 @@ public class ServerConnectClientThread extends Thread {
                 System.out.println("服务端和" + userId + "客户端保持通信, 读取数据");
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
+                String src = msg.getSender();
+                String dest = msg.getGetter();
+                String content = msg.getContent();
 
 
                 if (msg.getMesType().equals(MessageType.MESSAGE_GET_ONLINE_FRIEND)) {
@@ -47,7 +50,6 @@ public class ServerConnectClientThread extends Thread {
                     ObjectOutputStream oos = new ObjectOutputStream(scctSocket.getOutputStream());
                     oos.writeObject(retMsg);
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_CLIENT_EXIT)) {
-
                     System.out.println(msg.getSender() + "请求下线");
                     //拿到对应的线程及其套接字
                     ServerConnectClientThread scct = ManageServerConnectClientThreads.getServerConnectClientThread(msg.getSender());
@@ -58,9 +60,6 @@ public class ServerConnectClientThread extends Thread {
                     System.out.println(msg.getSender() + "下线成功");
                     break;
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_GET_PRIVATE_CHAT)) {
-                    String src = msg.getSender();
-                    String dest = msg.getGetter();
-                    String content = msg.getContent();
                     //转发数据包
                     Message srcToDestMsg = new Message();
                     srcToDestMsg.setSender(src);
@@ -90,8 +89,6 @@ public class ServerConnectClientThread extends Thread {
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
                     String onlineUsers = ManageServerConnectClientThreads.getOnlineUsers();//return "用户A 用户B 用户C"
                     String[] onlineUsersArr = onlineUsers.split(" ");
-                    String src = msg.getSender();
-                    String content = msg.getContent();
 
                     Message pubChatMsg = new Message();
                     pubChatMsg.setSender(src);
@@ -114,6 +111,20 @@ public class ServerConnectClientThread extends Thread {
                     }
                 }else if (msg.getMesType().equals(MessageType.MESSAGE_SEND_FILE)){
                     System.out.println("MESSAGE_SEND_FILE");
+                    //发消息告诉接收端
+                    Message preparationMsg = new Message();
+                    preparationMsg.setSender(src);
+                    preparationMsg.setGetter(dest);
+                    preparationMsg.setContent(content);
+                    preparationMsg.setMesType(MessageType.MESSAGE_RECEIVE_FILE);
+
+                    ServerConnectClientThread scct = ManageServerConnectClientThreads.getServerConnectClientThread(dest);
+                    Socket scctSocket = scct.getSocket();
+                    ObjectOutputStream oos = new ObjectOutputStream(scctSocket.getOutputStream());
+                    oos.writeObject(preparationMsg);
+
+                    //然后服务器开中转的线程
+
                 }
                 else {
                     System.out.println("其他类型的message, 暂时不处理");

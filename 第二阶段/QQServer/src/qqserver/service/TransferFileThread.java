@@ -14,9 +14,11 @@ public class TransferFileThread extends ServerConnectClientThread implements Run
     private String destUserId = null;
     private Socket destSocket = null;
     private static ServerSocket serverFileSocket = null;
+
     static {
         try {
             serverFileSocket = new ServerSocket(8888);
+            System.out.println("服务器已开启文件传输线程");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,35 +34,48 @@ public class TransferFileThread extends ServerConnectClientThread implements Run
 
     @Override
     public void run() {
-        synchronized (this){
+        boolean b = true;
+        while(b){
             try {
-                System.out.println("服务器正在接收发送端的数据...");
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(getSocket().getInputStream());
+                Socket socket = serverFileSocket.accept();
+                System.out.println("客户端连接成功！");
 
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(destSocket.getOutputStream());
-//                FileOutputStream fileOutputStream = new FileOutputStream("src\\copy.jpg");
-//                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-
-//                FileInputStream fileInputStream = new FileInputStream("src\\copy.jpg");
-//                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                int readLen;
-                byte[] buf = new byte[1024];
-                while((readLen = bufferedInputStream.read(buf))!=-1){
-                    Thread.sleep(1000);
-                    bufferedOutputStream.write(buf,0,readLen);
-                }
-                bufferedOutputStream.flush();
-                destSocket.shutdownOutput();
-                System.out.println("服务器中转完成");
-                bufferedOutputStream.close();
-                bufferedInputStream.close();
-                this.getSocket().close();
-                Thread.sleep(1000000);
-                this.destSocket.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+
+
+//        synchronized (this){
+//            try {
+//                System.out.println("服务器正在接收发送端的数据...");
+//                BufferedInputStream bufferedInputStream = new BufferedInputStream(getSocket().getInputStream());
+//
+//                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(destSocket.getOutputStream());
+////                FileOutputStream fileOutputStream = new FileOutputStream("src\\copy.jpg");
+////                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+//
+////                FileInputStream fileInputStream = new FileInputStream("src\\copy.jpg");
+////                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+//                int readLen;
+//                byte[] buf = new byte[1024];
+//                while((readLen = bufferedInputStream.read(buf))!=-1){
+//                    Thread.sleep(1000);
+//                    bufferedOutputStream.write(buf,0,readLen);
+//                }
+//                bufferedOutputStream.flush();
+//                destSocket.shutdownOutput();
+//                System.out.println("服务器中转完成");
+//                bufferedOutputStream.close();
+//                bufferedInputStream.close();
+//                this.getSocket().close();
+//                Thread.sleep(1000000);
+//                this.destSocket.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
     }
 

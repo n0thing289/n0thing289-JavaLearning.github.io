@@ -26,6 +26,9 @@ public class ClientConnectServerThread extends Thread {
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
+                String src = msg.getSender();
+                String dest = msg.getGetter();
+                String content = msg.getContent();
 
                 //判断这个message类型
                 if (msg.getMesType().equals(MessageType.MESSAGE_RET_ONLINE_FRIEND)) {
@@ -44,11 +47,10 @@ public class ClientConnectServerThread extends Thread {
                     System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[私聊消息]%s >>> %s: %s\n>", msg.getSender(), msg.getGetter(), msg.getContent());
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
                     System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[群发消息]%s 对 %s: %s\n>", msg.getSender(), "大家说", msg.getContent());
-                } else if (msg.getMesType().equals(MessageType.MESSAGE_RECEIVE_FILE)) {
-                    //拆包
-                    String src = msg.getSender();
-                    String dest = msg.getGetter();
-                    String content = msg.getContent();
+                }else if(msg.getMesType().equals(MessageType.MESSAGE_READY_TRANSFER_FILE)){
+                    //
+                }
+                else if (msg.getMesType().equals(MessageType.MESSAGE_RECEIVE_FILE)) {
                     //回复客户端准备就绪
                     Message resStatueToServerMsg = new Message();
                     resStatueToServerMsg.setSender(src);
@@ -65,11 +67,6 @@ public class ClientConnectServerThread extends Thread {
                     ManageClientConnectServerThreads.addClientConnectServerThread(dest, receiveFileThread);
                     new Thread(receiveFileThread).start();
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_SERVER_PUSH)) {
-                    //拆包
-                    String src = msg.getSender();
-                    String dest = msg.getGetter();
-                    String content = msg.getContent();
-
                     System.out.printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[群发消息]%s 对 %s: %s\n>", msg.getSender(), "大家说", msg.getContent());
                 } else {
                     //
