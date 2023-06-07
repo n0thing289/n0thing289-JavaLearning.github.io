@@ -29,12 +29,9 @@ public class ServerConnectClientThread extends Thread {
                 System.out.println("服务端和" + userId + "客户端保持通信, 读取数据");
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
-                String src = msg.getSender();
-                String dest = msg.getGetter();
-                String content = msg.getContent();
-
 
                 if (msg.getMesType().equals(MessageType.MESSAGE_GET_ONLINE_FRIEND)) {
+
                     System.out.println(msg.getSender() + "正在请求拉取在线用户列表");
                     //如果判断出客户端的请求在线用户列表的消息类型
                     //拿到所有的在线用户
@@ -60,6 +57,9 @@ public class ServerConnectClientThread extends Thread {
                     System.out.println(msg.getSender() + "下线成功");
                     break;
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_GET_PRIVATE_CHAT)) {
+                    String src = msg.getSender();
+                    String dest = msg.getGetter();
+                    String content = msg.getContent();
                     //转发数据包
                     Message srcToDestMsg = new Message();
                     srcToDestMsg.setSender(src);
@@ -87,6 +87,9 @@ public class ServerConnectClientThread extends Thread {
                     }
 
                 } else if (msg.getMesType().equals(MessageType.MESSAGE_COMM_MES)) {
+                    String src = msg.getSender();
+                    String dest = msg.getGetter();
+                    String content = msg.getContent();
                     String onlineUsers = ManageServerConnectClientThreads.getOnlineUsers();//return "用户A 用户B 用户C"
                     String[] onlineUsersArr = onlineUsers.split(" ");
 
@@ -110,6 +113,9 @@ public class ServerConnectClientThread extends Thread {
                         }
                     }
                 }else if (msg.getMesType().equals(MessageType.MESSAGE_SEND_FILE)){
+                    String src = msg.getSender();
+                    String dest = msg.getGetter();
+                    String content = msg.getContent();
                     System.out.println("MESSAGE_SEND_FILE");
                     //发消息告诉接收端
                     Message preparationMsg = new Message();
@@ -118,15 +124,31 @@ public class ServerConnectClientThread extends Thread {
                     preparationMsg.setContent(content);
                     preparationMsg.setMesType(MessageType.MESSAGE_RECEIVE_FILE);
 
+                    //然后服务器开中转的线程
+                    Thread thread = new Thread(new TransferFileThread());
+                    thread.start();
+
                     ServerConnectClientThread scct = ManageServerConnectClientThreads.getServerConnectClientThread(dest);
                     Socket scctSocket = scct.getSocket();
                     ObjectOutputStream oos = new ObjectOutputStream(scctSocket.getOutputStream());
                     oos.writeObject(preparationMsg);
 
-                    //然后服务器开中转的线程
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_READY_TRANSFER_FILE)) {
+                    //告诉发送端开始发送文件
+                    String src = msg.getSender();
+                    String dest = msg.getGetter();
+                    String content = msg.getContent();
+                    Message preparationMsg = new Message();
+                    preparationMsg.setSender(src);
+                    preparationMsg.setGetter(dest);
+                    preparationMsg.setContent(content);
+                    preparationMsg.setMesType(MessageType.MESSAGE_READY_TRANSFER_FILE);
 
-                }
-                else {
+                    ServerConnectClientThread scct = ManageServerConnectClientThreads.getServerConnectClientThread(src);
+                    Socket scctSocket = scct.getSocket();
+                    ObjectOutputStream oos = new ObjectOutputStream(scctSocket.getOutputStream());
+                    oos.writeObject(preparationMsg);
+                } else {
                     System.out.println("其他类型的message, 暂时不处理");
                 }
             } catch (Exception e) {

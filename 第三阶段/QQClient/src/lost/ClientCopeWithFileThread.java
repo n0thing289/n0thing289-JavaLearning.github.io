@@ -1,5 +1,6 @@
-package qqclient.service;
+package lost;
 
+import qqclient.service.ClientConnectServerThread;
 import qqcommon.Message;
 import qqcommon.MessageType;
 

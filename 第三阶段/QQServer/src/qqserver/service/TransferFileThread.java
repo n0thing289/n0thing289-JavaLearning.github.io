@@ -8,11 +8,12 @@ import java.util.HashMap;
 /**
  * 此类是每次文件发送的服务器，每有一次文件传输，就会启动一个线程
  * */
-public class TransferFileThread extends ServerConnectClientThread implements Runnable{
+public class TransferFileThread implements Runnable{
 
     private String userId = null;
     private String destUserId = null;
     private Socket destSocket = null;
+    private String[] name;
     private static ServerSocket serverFileSocket = null;
 
     static {
@@ -24,22 +25,20 @@ public class TransferFileThread extends ServerConnectClientThread implements Run
         }
     }
 
-    public TransferFileThread(Socket socket, Socket destSocket, String userId, String destUserId) {
-        super(socket, userId);
-        this.destSocket = destSocket;
+    public TransferFileThread() {
 
-        this.userId = userId;
-        this.destUserId = destUserId;
     }
+
 
     @Override
     public void run() {
+        name = new String[]{userId, destUserId};
         boolean b = true;
         while(b){
             try {
                 Socket socket = serverFileSocket.accept();
-                System.out.println("客户端连接成功！");
-
+                System.out.println("客户端文件专属连接成功！");
+                System.out.println(socket);
             } catch (IOException e) {
                 e.printStackTrace();
             }

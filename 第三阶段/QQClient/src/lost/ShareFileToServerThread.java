@@ -1,4 +1,4 @@
-package qqclient.service;
+package lost;
 
 public class ShareFileToServerThread {
 }

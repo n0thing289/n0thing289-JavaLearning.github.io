@@ -85,48 +85,49 @@ public class QQServer{
 //                    socket.shutdownOutput();
                         socket.close();
                     }
-                } else if (o instanceof Message) {//默认第一次接收的时候是user用于登录，在这里就直接进行文件中转有关操作
-                    Message trySendMsg = (Message) o;
-
-
-                    if(trySendMsg.getMesType().equals(MessageType.MESSAGE_SEND_FILE)){
-                        String src = trySendMsg.getSender();//
-                        String dest = trySendMsg.getGetter();
-                        String content = trySendMsg.getContent();
-                        //告诉接收端开线程准备接收，并让接收端用新套接字连接
-                        Message toReceiverMsg = new Message();
-                        toReceiverMsg.setSender(src);
-                        toReceiverMsg.setGetter(dest);
-                        toReceiverMsg.setContent(content);
-                        toReceiverMsg.setMesType(MessageType.MESSAGE_RECEIVE_FILE);
-
-                        ServerConnectClientThread serverConnectClientThread = ManageServerConnectClientThreads.getServerConnectClientThread(dest);
-                        Socket serverConnectClientThreadSocket = serverConnectClientThread.getSocket();
-                        new ObjectOutputStream(serverConnectClientThreadSocket.getOutputStream()).writeObject(toReceiverMsg);
-
-                        //将发送端的文件套接字保管
-                        fileSenderSocket = socket;
-                        transferFileThread = new TransferFileThread(fileSenderSocket, null, src, dest);//由于接收端还没连接服务器,目标先设空
-                    } else if (trySendMsg.getMesType().equals(MessageType.MESSAGE_READY_TRANSFER_FILE)) {
-                        String src = trySendMsg.getSender();
-                        String dest = trySendMsg.getGetter();
-//                        String content = trySendMsg.getContent();
-
-                        //告诉发送端开始进行发送数据
-                        Message resToSender = new Message();
-                        resToSender.setSender(src);
-                        resToSender.setSender(dest);
-//                        resToSender.setContent(content);
-                        resToSender.setMesType(MessageType.MESSAGE_READY_TRANSFER_FILE);
-//                        Socket resSocket = ManageServerConnectClientThreads.getServerConnectClientThread(src).getSocket();
-                        new ObjectOutputStream(fileSenderSocket.getOutputStream()).writeObject(resToSender);
-
-                        //说明接收端已经准备好了
-                        fileReceiverSocket = socket;
-                        transferFileThread.setDestSocket(fileReceiverSocket);//能进入到这里说明是接收端连接服务器了,返回的这个socket就是接收端文件传输的socket
-                        new Thread(transferFileThread).start();
-                    }
                 }
+//                else if (o instanceof Message) {//默认第一次接收的时候是user用于登录，在这里就直接进行文件中转有关操作
+//                    Message trySendMsg = (Message) o;
+//
+//
+//                    if(trySendMsg.getMesType().equals(MessageType.MESSAGE_SEND_FILE)){
+//                        String src = trySendMsg.getSender();//
+//                        String dest = trySendMsg.getGetter();
+//                        String content = trySendMsg.getContent();
+//                        //告诉接收端开线程准备接收，并让接收端用新套接字连接
+//                        Message toReceiverMsg = new Message();
+//                        toReceiverMsg.setSender(src);
+//                        toReceiverMsg.setGetter(dest);
+//                        toReceiverMsg.setContent(content);
+//                        toReceiverMsg.setMesType(MessageType.MESSAGE_RECEIVE_FILE);
+//
+//                        ServerConnectClientThread serverConnectClientThread = ManageServerConnectClientThreads.getServerConnectClientThread(dest);
+//                        Socket serverConnectClientThreadSocket = serverConnectClientThread.getSocket();
+//                        new ObjectOutputStream(serverConnectClientThreadSocket.getOutputStream()).writeObject(toReceiverMsg);
+//
+//                        //将发送端的文件套接字保管
+//                        fileSenderSocket = socket;
+//                        transferFileThread = new TransferFileThread(fileSenderSocket, null, src, dest);//由于接收端还没连接服务器,目标先设空
+//                    } else if (trySendMsg.getMesType().equals(MessageType.MESSAGE_READY_TRANSFER_FILE)) {
+//                        String src = trySendMsg.getSender();
+//                        String dest = trySendMsg.getGetter();
+////                        String content = trySendMsg.getContent();
+//
+//                        //告诉发送端开始进行发送数据
+//                        Message resToSender = new Message();
+//                        resToSender.setSender(src);
+//                        resToSender.setSender(dest);
+////                        resToSender.setContent(content);
+//                        resToSender.setMesType(MessageType.MESSAGE_READY_TRANSFER_FILE);
+////                        Socket resSocket = ManageServerConnectClientThreads.getServerConnectClientThread(src).getSocket();
+//                        new ObjectOutputStream(fileSenderSocket.getOutputStream()).writeObject(resToSender);
+//
+//                        //说明接收端已经准备好了
+//                        fileReceiverSocket = socket;
+//                        transferFileThread.setDestSocket(fileReceiverSocket);//能进入到这里说明是接收端连接服务器了,返回的这个socket就是接收端文件传输的socket
+//                        new Thread(transferFileThread).start();
+//                    }
+//                }
 
 
             }
