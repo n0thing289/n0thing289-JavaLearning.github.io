@@ -117,16 +117,17 @@ public class ServerConnectClientThread extends Thread {
                     String dest = msg.getGetter();
                     String content = msg.getContent();
                     System.out.println("MESSAGE_SEND_FILE");
+
+                    //然后服务器开中转的线程
+                    Thread thread = new Thread(new TransferFileThread(src, dest, content));
+                    thread.start();
+
                     //发消息告诉接收端
                     Message preparationMsg = new Message();
                     preparationMsg.setSender(src);
                     preparationMsg.setGetter(dest);
                     preparationMsg.setContent(content);
                     preparationMsg.setMesType(MessageType.MESSAGE_RECEIVE_FILE);
-
-                    //然后服务器开中转的线程
-                    Thread thread = new Thread(new TransferFileThread());
-                    thread.start();
 
                     ServerConnectClientThread scct = ManageServerConnectClientThreads.getServerConnectClientThread(dest);
                     Socket scctSocket = scct.getSocket();

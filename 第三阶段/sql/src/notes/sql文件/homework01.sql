@@ -1,0 +1,11 @@
+CREATE TABLE emp(
+	id INT,
+	NAME VARCHAR(32),
+	sex CHAR(1),
+	birthday DATE,
+	entry_time DATETIME,
+	job VARCHAR(32),
+	salary DOUBLE,
+	RESUME TEXT) CHARACTER SET utf8 COLLATE utf8_bin ENGINE INNODB;
+	
+INSERT INTO em

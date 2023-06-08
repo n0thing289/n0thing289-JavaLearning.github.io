@@ -12,8 +12,9 @@ public class TransferFileThread implements Runnable{
 
     private String userId = null;
     private String destUserId = null;
+    private Socket srcSocket = null;
     private Socket destSocket = null;
-    private String[] name;
+    private String filename = null;
     private static ServerSocket serverFileSocket = null;
 
     static {
@@ -29,20 +30,49 @@ public class TransferFileThread implements Runnable{
 
     }
 
+    public TransferFileThread(String userId, String destUserId, String content) {
+        this.userId = userId;
+        this.destUserId = destUserId;
+        String[] split = content.split("\\\\");
+        String s = split[split.length - 1];
+        this.filename = s;
+    }
 
     @Override
     public void run() {
-        name = new String[]{userId, destUserId};
-        boolean b = true;
-        while(b){
+        int a = 1;
+        while (true){
             try {
                 Socket socket = serverFileSocket.accept();
                 System.out.println("客户端文件专属连接成功！");
                 System.out.println(socket);
+                if(a == 1){
+                    destSocket = socket;
+                    a++;
+                } else if (a == 2) {
+                    srcSocket = socket;
+                    break;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("go");
+        try {
+            BufferedInputStream srcBIS = new BufferedInputStream(srcSocket.getInputStream());
+            FileOutputStream fileOutputStream = new FileOutputStream("src\\" + filename);
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+            int readLen;
+            byte[] buf = new byte[1024];
+            while((readLen = srcBIS.read(buf)) != -1){
+                bufferedOutputStream.write(buf, 0, readLen);
+            }
+            bufferedOutputStream.flush();
+            bufferedOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
 
 
@@ -111,4 +141,13 @@ public class TransferFileThread implements Runnable{
     public void setDestSocket(Socket destSocket) {
         this.destSocket = destSocket;
     }
+
+    public Socket getSrcSocket() {
+        return srcSocket;
+    }
+
+    public void setSrcSocket(Socket srcSocket) {
+        this.srcSocket = srcSocket;
+    }
+
 }

@@ -205,23 +205,12 @@ public class UserClientService {
                 preparationMsg.setGetter(destUserId);
                 preparationMsg.setContent(filepath);
                 preparationMsg.setMesType(MessageType.MESSAGE_SEND_FILE);
-                //old
-//                Socket filesocket = new Socket(InetAddress.getLocalHost(), 8080);
-//                new ObjectOutputStream(filesocket.getOutputStream()).writeObject(preparationMsg);
-//                new MyObjectOutputStream(filesocket.getOutputStream()).writeObject(preparationMsg);
-                //先用原本的线程发消息告知服务器
+
                 ClientConnectServerThread ccst = ManageClientConnectServerThreads.getClientConnectServerThread(user.getUserId());
                 Socket socket = ccst.getSocket();
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                 oos.writeObject(preparationMsg);
-                //old
-//                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-//                Message readyMsg = (Message) (new ObjectInputStream(socket.getInputStream())).readObject();
-//                if(readyMsg.getMesType().equals(MessageType.MESSAGE_READY_TRANSFER_FILE)){
-//                    //开线程给服务器发送数据
-//                    ClientCopeWithFileThread sendFileThread = new ClientCopeWithFileThread(socket, "sendFileMode", filepath, user.getUserId(), destUserId);
-//                    new Thread(sendFileThread).start();
-//                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -63,6 +63,7 @@ public class ClientConnectServerThread extends Thread {
                     Message resStatueToServerMsg = new Message();
                     resStatueToServerMsg.setSender(src);
                     resStatueToServerMsg.setGetter(dest);
+                    resStatueToServerMsg.setContent(content);
                     resStatueToServerMsg.setMesType(MessageType.MESSAGE_READY_TRANSFER_FILE);
 
                     Socket filesocket = new Socket(InetAddress.getLocalHost(), 8888);

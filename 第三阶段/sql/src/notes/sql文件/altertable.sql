@@ -1,0 +1,15 @@
+USE hsp_db02;
+
+ALTER TABLE emp ADD (`image` VARCHAR(10) NOT NULL DEFAULT '' AFTER RESUME);
+
+ALTER TABLE emp MODIFY job VARCHAR(60) NOT NULL DEFAULT '';
+
+ALTER TABLE emp DROP sex;
+
+RENAME TABLE emp TO employee;
+
+ALTER TABLE employee CHARACTER SET utf8;
+
+ALTER TABLE employee CHANGE `name` `user_name` VARCHAR(64) NOT NULL DEFAULT ''; 
+
+DESC employee;
