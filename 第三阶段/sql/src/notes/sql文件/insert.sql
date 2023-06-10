@@ -6,3 +6,5 @@ SELECT * FROM goods;
 
 INSERT INTO employee(id, user_name, birthday, entry_time, job, salary, RESUME, image) VALUES(1, '02国家队', '2002-02-02', '2019-02-02', '美团 外卖', 5000, '唱跳rap篮球', '77');
 SELECT * FROM employee;
+
+CREATE TABLE `goods02`(id INT, goods_name VARCHAR(10), price DOUBLE NOT NULL DEFAULT 200);
