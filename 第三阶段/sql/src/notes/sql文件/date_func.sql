@@ -15,16 +15,13 @@ SELECT * FROM mes;
 
 -- 第二组api
 INSERT INTO mes VALUES(2, '上海新闻', NOW());
-
 INSERT INTO mes VALUES(5, 'xx新闻', NOW());
-
 SELECT * FROM mes;
 
 SELECT NOW() FROM DUAL;
 
 
 -- 上应用实例
-
 -- 显示所有留言信息，发布日期只显示 日期，不用显示时间
 SELECT id, content, DATE(send_time) FROM mes;
 -- 请查询在10分钟内发布的帖子

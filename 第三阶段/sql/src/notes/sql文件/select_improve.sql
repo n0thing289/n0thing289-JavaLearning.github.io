@@ -11,7 +11,7 @@ SELECT ename, sal FROM emp
 	WHERE ename LIKE '__O%';
 
 
--- 3. is
+-- 3. 判断是不是null 用is
 SELECT * FROM emp
 	WHERE mgr IS NULL;
 	
