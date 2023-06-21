@@ -6,9 +6,6 @@ SELECT * FROM emp
 		FROM emp 
 		WHERE ename='SMITH');
 		
-
-;
-
 SELECT ename, job, sal, deptno FROM emp
 	WHERE job IN (
 		SELECT DISTINCT job FROM emp
@@ -17,7 +14,7 @@ SELECT ename, job, sal, deptno FROM emp
 	
 	
 	
--- 子查询临时i表
+-- 子查询临时表
 SELECT goods_id, ecs_goods.cat_id,goods_name,shop_price 
 	FROM ecs_goods, (SELECT cat_id, MAX(shop_price) AS mx FROM ecs_goods
 	GROUP BY cat_id) temp
