@@ -9,3 +9,4 @@ INSERT INTO t23
 	VALUES(1, 'jack', 'mid', 1);
 	
 SELECT * FROM t23;
+
