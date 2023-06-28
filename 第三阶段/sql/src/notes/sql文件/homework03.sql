@@ -35,19 +35,33 @@ SELECT ename FROM emp WHERE ename LIKE '_____';
 
 
 -- 13.显示不带有"R"的员工的姓名.
+SELECT ename FROM emp WHERE ename NOT LIKE '%R%';
 -- 14.显示所有员工姓名的前三个字符.
+SELECT SUBSTRING(ename,1,3) FROM emp;
 -- 15.显示所有员工的姓名,用a替换所有"A”
+SELECT REPLACE(ename, 'A','a') FROM emp;
 -- 16.显示满10年服务年限的员工的姓名和受雇日期.
+SELECT ename, hiredate FROM emp WHERE DATE_ADD(hiredate, INTERVAL 10 YEAR) <= NOW();
 -- 17.显示员工的详细资料,按姓名排序.
+SELECT * FROM emp ORDER BY ename DESC;
 -- 18.显示员工的姓名和受雇日期,根据其服务年限,将最老的员工排在最前面
+SELECT MAX(DATEDIFF(NOW(), hiredate)) FROM emp;
+SELECT ename, hiredate,DATEDIFF(NOW(), hiredate) FROM emp ORDER BY DATEDIFF(NOW(), hiredate) DESC;
 
-19.显示所有员工的姓名、工作和薪金,按工作降序排序,若工作相同则按薪金排序.
-20.显示所有员工的姓名、加入公司的年份和月份,按受雇日期所在月排序,若月份相同则将最早年份
-的员工排在最前面
+-- -- 19.显示所有员工的姓名、工作和薪金,按工作降序排序,若工作相同则按薪金排序.
+SELECT ename,sal,job FROM emp ORDER BY job DESC, sal ASC;
+-- 20.显示所有员工的姓名、加入公司的年份和月份,按受雇日期所在月排序,若月份相同则将最早年份
+-- 的员工排在最前面
+SELECT ename, YEAR(hiredate) `year`, MONTH(hiredate) `month` FROM emp ORDER BY `month`, `year`;
 
-21.显示在一个月为30天的情况所有员工的日薪金,忽略余数
-22.找出在(任何年份的)2月受聘的所有员工
-23.对于每个员工,显示其加入公司的天数
+-- 21.显示在一个月为30天的情况所有员工的日薪金,忽略余数
+SELECT ename, FORMAT(sal/30,0) AS '日新金' FROM emp;
+-- 22.找出在(任何年份的)2月受聘的所有员工
+SELECT ename, hiredate FROM emp WHERE MONTH(hiredate) = 2;
+-- 23.对于每个员工,显示其加入公司的天数
+SELECT DATEDIFF(NOW(), hiredate) FROM emp;
 
-24.显示姓名字段的任何位置包含"A”的所有员工的姓名
-25.以年月日的方式显示所有员工的服务年限.(大概)
+-- 24.显示姓名字段的任何位置包含"A”的所有员工的姓名
+SELECT ename FROM emp WHERE ename LIKE '%A%';
+-- 25.以年月日的方式显示所有员工的服务年限.(大概)
+SELECT FORMAT(DATEDIFF(NOW(), hiredate)/365,0) AS '服务年数', FORMAT(DATEDIFF(NOW(), hiredate)% 365 /30,0) AS '服务月数', DATEDIFF(NOW(), hiredate)%31 AS '服务天数' FROM emp;
