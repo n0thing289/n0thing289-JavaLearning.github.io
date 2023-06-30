@@ -30,8 +30,8 @@ public class jdbc01 {
         Connection connect = driver.connect(url, properties);
         System.out.println(connect);
         //3. 执行sql语句
-//        String sql = "insert into actor values(1, '刘德华','男','1970-11-11', '110')";
-        String sql = "update actor set `name` = 'hwk' where id = 1";
+        String sql = "insert into actor values(2, '刘德华','男','1970-11-11', '110')";
+//        String sql = "update actor set `name` = 'hwk' where id = 1";
         Statement statement = connect.createStatement();//发送sql语句,并返回生成的结果对象
         int rows = statement.executeUpdate(sql); // 如果是dml语句,返回的就是影响行数
         System.out.println(rows > 0?"成功":"失败");
