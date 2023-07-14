@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -67,6 +68,8 @@ public class JdbcConn {
 //        Class.forName("com.mysql.jdbc.Driver");
         // 细节
         //1. Class.forName("com.mysql.jdbc.Driver"); 在高版本的jdk和mysql中也可以不写
+
+        Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/hsp_db02";
         String user = "root";
         String password = "hsp";
@@ -119,4 +122,121 @@ public class JdbcConn {
         statement.close();
         connection.close();
     }
+
+    @Test
+    public void Reconnect01() throws SQLException {
+        //1. 注册驱动
+        Driver driver = new Driver();
+        String url = "jdbc:mysql://localhost:3306/hsp_db02";
+        Properties properties = new Properties();
+        properties.setProperty("user", "root");
+        properties.setProperty("password", "hsp");
+        //2. 获得连接
+        Connection connect = driver.connect(url, properties);
+        System.out.println(connect);
+
+        //3. dml
+        String sql = "insert into actor values(3,'qaz','男', '1970-1-1', 110);";
+        Statement statement = connect.createStatement();
+        int rows = statement.executeUpdate(sql);
+        System.out.println(rows>0?"ok":"def");
+
+        //4.
+        statement.close();
+        connect.close();
+    }
+    @Test
+    public void ReConnect02() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
+        //1. 注册驱动
+        Class<?> aClass = Class.forName("com.mysql.jdbc.Driver");
+        Driver driver = (Driver)aClass.getDeclaredConstructor().newInstance();
+        //2. 获得连接
+        String url = "jdbc:mysql://localhost:3306/hsp_db02";
+        Properties properties = new Properties();
+        properties.setProperty("user", "root");
+        properties.setProperty("password","hsp");
+        Connection connect = driver.connect(url, properties);
+        System.out.println(connect);
+
+        //3. dml操作
+        String sql = "insert into actor values(4, '复习连接方式2','男',null,null)";
+        Statement statement = connect.createStatement();
+        int rows = statement.executeUpdate(sql);
+        System.out.println(rows>0?"ok":"error");
+
+        //4. 关闭
+        statement.close();
+        connect.close();
+    }
+    @Test
+    public void ReConnect03() throws ClassNotFoundException, IOException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
+        //1. 注册链接
+        Class<?> aClass = Class.forName("com.mysql.jdbc.Driver");
+        Driver driver = (Driver)aClass.getDeclaredConstructor().newInstance();
+        //2. 获得链接
+        Properties properties = new Properties();
+        properties.load(new FileReader("src\\mysql.properties"));
+        String user = properties.getProperty("user");
+        String password = properties.getProperty("password");
+        String url = properties.getProperty("url");
+
+        DriverManager.registerDriver(driver);
+        Connection connection = DriverManager.getConnection(url, user, password);
+        //3. dml操作
+        String sql = "insert into actor values(5, '复习连接方式3','男',null,null)";
+        Statement statement = connection.createStatement();
+        int rows = statement.executeUpdate(sql);
+        System.out.println(rows>0?"ok":"error");
+
+        //4.
+        statement.close();
+        connection.close();
+    }
+    @Test
+    public void ReConnect04() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException {
+        //1. 注册链接
+        Class<?> aClass = Class.forName("com.mysql.jdbc.Driver");
+//        Driver driver = (Driver) aClass.getDeclaredConstructor().newInstance();
+        //2. 获得连接
+        String url = "jdbc:mysql://localhost:3306/hsp_db02";
+        String user = "root";
+        String password = "hsp";
+        Connection connection = DriverManager.getConnection(url, user, password);
+        //3. dml操作
+        String sql = "insert into actor values(6,'复习连接方式4','男',null,null);";
+        Statement statement = connection.createStatement();
+        int rows = statement.executeUpdate(sql);
+        System.out.println(rows>0?"ok":"error");
+        //4.
+        statement.close();
+        connection.close();
+
+    }
+    @Test
+    public void ReConnect05() throws IOException, ClassNotFoundException, SQLException {
+        Properties properties = new Properties();
+        properties.load(new FileReader("src\\mysql.properties"));
+        String url = properties.getProperty("url");
+        String user = properties.getProperty("user");
+        String password = properties.getProperty("password");
+        String driver = properties.getProperty("driver");
+        //1. 注册驱动
+        Class.forName(driver);
+
+        //2. 获得连接
+        Connection connection = DriverManager.getConnection(url, user, password);
+
+        //3. dml语句
+        String sql = "insert into actor values(7, '复习连接方式5','男',null,null);";
+        Statement statement = connection.createStatement();
+        int rows = statement.executeUpdate(sql);
+        System.out.println(rows>0?"ok":"error");
+
+        //4.
+        statement.close();
+        connection.close();
+
+    }
 }
+
+

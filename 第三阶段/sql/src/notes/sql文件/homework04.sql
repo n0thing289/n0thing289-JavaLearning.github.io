@@ -1,7 +1,7 @@
 -- 1. 列出至少有一个员工的所有部门C
 SELECT ename, emp.deptno, dname FROM emp, dept WHERE emp.deptno = dept.deptno ORDER BY dname;
 SELECT COUNT(*) AS c, deptno FROM emp GROUP BY deptno HAVING c > 1; 
--- 2. 列出薪金比“SMITH”多的所有员工。
+-- 2. 列出薪金比“SMITH”多的所有员工。`hsp_db02``actor``actor`
 /*	用子查询
 	先查找SMITH的sal
 	再作为子查询去查其他员工的
