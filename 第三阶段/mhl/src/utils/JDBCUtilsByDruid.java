@@ -1,4 +1,4 @@
-package jdbc.datasource;
+package utils;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
