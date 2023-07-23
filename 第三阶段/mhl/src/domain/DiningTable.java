@@ -8,7 +8,7 @@ package domain;
  * */
 public class DiningTable {
     private Integer id;
-    private String state;
+    private String state;// 规定 空 被预定 就餐中
     private String orderName;
     private String orderTel;
 

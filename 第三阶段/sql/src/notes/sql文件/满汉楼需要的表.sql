@@ -29,8 +29,8 @@ UPDATE diningTable SET orderName = '', orderTel = '' WHERE id = 4;
 #菜谱
 CREATE TABLE menu (
 	id INT PRIMARY KEY AUTO_INCREMENT, #自增主键，作为菜谱编号(唯一)
-	NAME VARCHAR(50) NOT NULL DEFAULT '',#菜品名称
-	TYPE VARCHAR(50) NOT NULL DEFAULT '', #菜品种类
+	`NAME` VARCHAR(50) NOT NULL DEFAULT '',#菜品名称
+	`TYPE` VARCHAR(50) NOT NULL DEFAULT '', #菜品种类
 	price DOUBLE NOT NULL DEFAULT 0#价格
 )CHARSET=utf8; 
 
@@ -47,13 +47,14 @@ INSERT INTO menu VALUES(NULL, '鸡蛋汤', '汤类', 16);
 CREATE TABLE bill (
 	id INT PRIMARY KEY AUTO_INCREMENT, #自增主键
 	billId VARCHAR(50) NOT NULL DEFAULT '',#账单号可以按照自己规则生成 UUID
-	menuId INT NOT NULL DEFAULT 0,#菜品的编号, 也可以使用外键
-	nums SMALLINT NOT NULL DEFAULT 0,#份数
-	money DOUBLE NOT NULL DEFAULT 0, #金额
+	menuIds VARCHAR(50) NOT NULL DEFAULT '',#菜品的编号集合, 也可以使用外键
+	numSet VARCHAR(50) NOT NULL DEFAULT '',#份数集合
+	money DOUBLE NOT NULL DEFAULT 0, #总金额
 	diningTableId INT NOT NULL DEFAULT 0, #餐桌
 	billDate DATETIME NOT NULL ,#订单日期
 	state VARCHAR(50) NOT NULL DEFAULT '' # 状态 '未结账' , '已经结账', '挂单'
 )CHARSET=utf8;
 
-INSERT INTO menu VALUES(NULL,?,?,?,0,?,NOW(),'未结账')
+INSERT INTO menu VALUES(NULL,?,?,?,0,?,NOW(),'未结账');
+SELECT * FROM bill;
 DROP TABLE bill;

@@ -26,4 +26,16 @@ public class DiningTableService {
         return affectedRow == 1;
         /*老韩小技巧: 把要写的sql语句现在查询分析器中测一遍*/
     }
+
+    public DiningTable getDiningTableById(int diningTableId){
+        String sql = "select * from diningTable where id = ?;";
+        DiningTable diningTable = diningTableDAO.querySingle(sql, DiningTable.class, diningTableId);
+        return diningTable;
+    }
+
+    public boolean updateDiningTable(int diningTableId, String state){
+        String sql = "update diningTable set state = ? where id = ?";
+        int update = diningTableDAO.update(sql, state, diningTableId);
+        return update==1;
+    }
 }
