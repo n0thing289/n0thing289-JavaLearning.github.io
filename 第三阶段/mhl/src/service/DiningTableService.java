@@ -33,8 +33,14 @@ public class DiningTableService {
         return diningTable;
     }
 
-    public boolean updateDiningTable(int diningTableId, String state){
-        String sql = "update diningTable set state = ? where id = ?";
+    public boolean updateState(int diningTableId, String state){
+        String sql = "";
+        switch (state){
+            case "就餐中":
+                sql = "update diningTable set state = ? where id = ?";
+            case "空":
+                sql = "update diningTable set state = ?,orderName='',orderTel='' where id = ?";
+        }
         int update = diningTableDAO.update(sql, state, diningTableId);
         return update==1;
     }

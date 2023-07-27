@@ -58,3 +58,6 @@ CREATE TABLE bill (
 INSERT INTO menu VALUES(NULL,?,?,?,0,?,NOW(),'未结账');
 SELECT * FROM bill;
 DROP TABLE bill;
+
+-- 多表查询（视图）
+CREATE VIEW MultiMenuAndBill AS SELECT bill.id billId, menu.id menuId`multimenuandbill`,bill.menuIds,bill.numSet,money,bill.diningTableId,bill.state FROM menu, bill;`multimenuandbill`

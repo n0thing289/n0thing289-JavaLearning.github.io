@@ -3,6 +3,7 @@ package service;
 import dao.BillDAO;
 import domain.Bill;
 
+import java.util.List;
 import java.util.UUID;
 
 public class BillService {
@@ -36,5 +37,18 @@ public class BillService {
         String sql = "select * from bill where diningTableId = ?;";
         Bill bill = billDAO.querySingle(sql, Bill.class, diningTableId);
         return bill;
+    }
+    public List<Bill> getBillsByDiningTableId(int diningTableId){
+        String sql = "select * from bill where diningTableId = ?;";
+        List<Bill> bills = billDAO.queryMultiply(sql, Bill.class, diningTableId);
+        return bills;
+    }
+
+    public int updateState(int diningTableId, String way, String originalState){
+        List<Bill> bills = getBillsByDiningTableId(diningTableId);
+
+        String sql = "update bill set state = ? where diningTableId = ? and state = ?;";
+        int affectedRows = billDAO.update(sql, way, diningTableId, originalState);
+        return affectedRows;
     }
 }

@@ -1,16 +1,13 @@
 package view;
 
-import domain.Bill;
-import domain.DiningTable;
-import domain.Employee;
-import domain.Menu;
+import domain.*;
 import service.BillService;
 import service.DiningTableService;
 import service.EmployeeService;
 import service.MenuService;
 import utils.Utility;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 这是主界面
@@ -62,7 +59,7 @@ public class MHLView {
                             "\t\t2 预定餐桌\n" +
                             "\t\t3 显示所有菜品\n" +
                             "\t\t4 点餐服务\n" +
-                            "\t\t5 查看菜单\n" +
+                            "\t\t5 查看账单\n" +
                             "\t\t6 结账\n" +
                             "\t\t9 推出满汉楼\n"
             );
@@ -82,14 +79,11 @@ public class MHLView {
                     order();
                     break;
                 case "5":
-                    System.out.println("查看菜单");
-                    System.out.print("输入餐桌号：");
-                    int diningTableId = Utility.readInt();
-                    Bill billByDiningTableId = billService.getBillByDiningTableId(diningTableId);
-                    System.out.println(billByDiningTableId);
+                    showBill(1);
                     break;
                 case "6":
-                    System.out.println("结账");break;
+                    checkUp();
+                    break;
                 case "9":
                     System.out.println("推出满汉楼");
                     loop = false;
@@ -153,10 +147,15 @@ public class MHLView {
         int diningTableId = Utility.readInt();
         //如果是被预定(日后这里要完善,即使预定只需要核对一下当前的人是否是预定人即可)以及就餐中是不能选择的,
         DiningTable diningTableById = diningTableService.getDiningTableById(diningTableId);
-        if(diningTableById == null && !"空".equals(diningTableById.getState())){
+        if(diningTableById == null){
             System.out.println("请重新选择餐桌, 当前餐桌不存在或者非空");
             return;
         }
+//        if(!"空".equals(diningTableById.getState())
+//                || !"就餐中".equals(diningTableById.getState())){
+//            System.out.println("请重新选择餐桌, 当前餐桌不存在或者非空");
+//            return;
+//        }
         //else if(!"预定人".equals(diningTableById.getOrderName())){continue;}
         System.out.println("===点菜中=== ");
         String[] menus = new String[10];
@@ -198,9 +197,122 @@ public class MHLView {
         System.out.println(numsStr);
         if(billService.orderMenu(menusStr.toString(), numsStr.toString(), sum, diningTableId)){
             System.out.println("已记账");
-            diningTableService.updateDiningTable(diningTableId, "就餐中");
+            diningTableService.updateState(diningTableId, "就餐中");
         }
     }
+
+    //界面层封装 查看账单
+    public void showBill(){
+        System.out.println("查看菜单");
+        System.out.print("输入餐桌号：");
+        int diningTableId = Utility.readInt();
+        List<Bill> bills = billService.getBillsByDiningTableId(diningTableId);
+        for (Bill bill:bills){
+            if(!"未结账".equals(bill.getState())){
+                continue;
+            }
+            System.out.println(bill);
+        }
+
+
+    }
+
+    public void checkUp(){
+        System.out.println("结账");
+        System.out.println("请选择要结账的餐桌编号(-1退出): ");
+        int diningTableId = Utility.readInt();
+        if(diningTableId == -1){
+            return;
+        }
+        DiningTable diningTable = diningTableService.getDiningTableById(diningTableId);
+        if(diningTable == null){
+            System.out.println("此餐桌不存在");
+            return;
+        }
+        List<Bill> bills = billService.getBillsByDiningTableId(diningTableId);
+        double sum = 0;
+        for (Bill bill:bills){
+            if(!"未结账".equals(bill.getState())){
+                continue;
+            }
+            sum += bill.getMoney();
+        }
+        if(sum == 0){
+            System.out.println("该餐桌没有未结账菜单");
+            return;
+        }
+        System.out.println("结账的方式(现金/支付宝/微信)回车表示退出: ");
+        String way = Utility.readString(3);
+        System.out.println("确认是否结账(Y/N): ");
+        if("n".equals(Utility.readString(1))){
+            System.out.println("结账不成功");
+            return;
+        }
+
+        System.out.println("需要支付: " + sum + "元");
+        System.out.print("输入数字交钱: ");
+        double money = Double.parseDouble(Utility.readString(32));
+        if (money != sum){
+            System.out.println("支付存在问题,可能收钱少了");
+        }
+        //收钱成功,修改餐桌状态和账单的状态
+        if(diningTableService.updateState(diningTableId, "空")
+                && billService.updateState(diningTableId, way, "未结账") > 0){
+            System.out.println("结账成功");
+        }
+    }
+
+    public void showBill(int version){
+        System.out.println("查看菜单");
+        System.out.print("输入餐桌号：");
+        int diningTableId = Utility.readInt();
+        List<Bill> bills = billService.getBillsByDiningTableId(diningTableId);
+
+        for (Bill bill:bills){
+            String oldMenuIds = bill.getMenuIds();
+            String[] oldMenuIdsSplit = oldMenuIds.split(" ");
+            HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+            HashSet<String> newMenuIdsSet = new HashSet<>();
+            StringBuilder menuIds = new StringBuilder();//为了输出菜品号
+            int nextInt = 0;
+            for (int i = 0; i < oldMenuIdsSplit.length; i++) {//===strings.addAll(Arrays.asList(oldMenuIdsSplit));
+                nextInt = Integer.parseInt(oldMenuIdsSplit[i]);
+                String name = menuService.getMenuById(nextInt).getName();
+                if(newMenuIdsSet.add(name)){
+                    stringIntegerHashMap.put(name,1);
+                    menuIds.append(nextInt).append(" ");
+                }else{
+                    int oldValue = stringIntegerHashMap.get(name);
+                    stringIntegerHashMap.replace(name, ++oldValue);
+                }
+            }
+//            System.out.println(stringIntegerHashMap);//测试hashmap
+            //
+            System.out.println("===历史账单===");
+            System.out.print("编号: ");
+            System.out.println(bill.getId());
+
+            System.out.print("菜品号: ");
+            System.out.println(menuIds);
+
+            System.out.print("金额: ");
+            System.out.println(bill.getMoney());
+            System.out.print("桌号: ");
+            System.out.println(bill.getDiningTableId());
+            System.out.print("状态: ");
+            System.out.println(bill.getState());
+            Set<Map.Entry<String, Integer>> entries = stringIntegerHashMap.entrySet();
+            System.out.print("菜品明细: ");
+            for (Map.Entry<String, Integer> entry: entries){
+                System.out.print(entry.getKey() + "x" + entry.getValue());
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+
+
+    }
+
 
 
 }
