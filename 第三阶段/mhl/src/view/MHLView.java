@@ -263,6 +263,10 @@ public class MHLView {
     }
 
     public void showBill(int version){
+        /**
+         * 第一步，去重并且得到去重后的名称和对应数量，用hashmap关联
+         * 第二步，输出
+         * */
         System.out.println("查看菜单");
         System.out.print("输入餐桌号：");
         int diningTableId = Utility.readInt();
@@ -272,7 +276,7 @@ public class MHLView {
             String oldMenuIds = bill.getMenuIds();
             String[] oldMenuIdsSplit = oldMenuIds.split(" ");
             HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-            HashSet<String> newMenuIdsSet = new HashSet<>();
+            HashSet<String> newMenuIdsSet = new HashSet<>();//用来判断加入的是否为重复（做标志）
             StringBuilder menuIds = new StringBuilder();//为了输出菜品号
             int nextInt = 0;
             for (int i = 0; i < oldMenuIdsSplit.length; i++) {//===strings.addAll(Arrays.asList(oldMenuIdsSplit));
@@ -297,10 +301,13 @@ public class MHLView {
 
             System.out.print("金额: ");
             System.out.println(bill.getMoney());
+
             System.out.print("桌号: ");
             System.out.println(bill.getDiningTableId());
+
             System.out.print("状态: ");
             System.out.println(bill.getState());
+
             Set<Map.Entry<String, Integer>> entries = stringIntegerHashMap.entrySet();
             System.out.print("菜品明细: ");
             for (Map.Entry<String, Integer> entry: entries){
@@ -312,7 +319,14 @@ public class MHLView {
 
 
     }
-
+    /**
+     * 多表细节
+     * 1. 增加字段
+     * 2. 多表的domain，字段越来越多怎么办，进行一个拆分或者把一个bean作为另一个bean的属性，
+     * 3. 多表映射的domain可以不用有参构造器，反射还是会通过set，来设置属性
+     * 4. 属性名是否一定要和表的列名保持一致 -》 通过列名找setXxx() -》 会出问题，必须对应 --sql语句起别名就行
+     * */
+    //TODO 登录管理，人事管理
 
 
 }
