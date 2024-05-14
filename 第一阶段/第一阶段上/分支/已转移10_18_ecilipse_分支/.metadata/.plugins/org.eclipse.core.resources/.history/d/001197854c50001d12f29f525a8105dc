@@ -1,0 +1,29 @@
+package switch_learning;
+import java.util.Scanner;
+
+public class SwitchExercise {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input = new Scanner(System.in);
+		System.out.println("enter(a to e):");
+		char small_char = input.next().charAt(0);
+		
+		switch (small_char) {
+			case 'a':
+				System.out.println('A');
+			case 'b':
+				System.out.println('B');
+			case 'c':
+				System.out.println('C');
+			case 'd':
+				System.out.println('D');
+			case 'e':
+				System.out.println("E");
+			
+		}
+		
+		System.out.println();
+	}
+
+}

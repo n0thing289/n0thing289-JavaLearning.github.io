@@ -1,0 +1,15 @@
+package 分支;
+
+public class IfExercise02 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		double var1 = 3;
+		double var2 = 3;
+		double sum = var1 + var2;
+		if (sum % 3 == 0) {
+			System.out.println("可以被三整除");
+		}
+	}
+
+}

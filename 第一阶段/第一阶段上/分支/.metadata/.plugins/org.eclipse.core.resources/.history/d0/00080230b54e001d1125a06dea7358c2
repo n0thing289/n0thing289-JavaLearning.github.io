@@ -1,0 +1,20 @@
+package 作业;
+
+public class Logic {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int a = 3;
+		int b =2;
+		if (a > 2 || b++ > 2) {
+			System.out.print("a`s var is " + a + "b`s var is " + b);
+		}
+		
+		a = 3;
+		b =2;
+		if (a > 2 | b++ > 2) {
+			System.out.print("a`s var is " + a + "b`s var is " + b);
+		}
+	}
+		
+}

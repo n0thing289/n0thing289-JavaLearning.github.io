@@ -1,0 +1,15 @@
+package day1020homework;
+import java.util.Scanner;
+
+
+public class homework01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner my_scanner = new Scanner(System.in);
+		double radius = my_scanner.nextDouble();
+		double area = radius * radius * 3.14159;
+		System.out.println("radius: " + radius + "-->> " + area);
+	}
+
+}

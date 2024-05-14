@@ -1,0 +1,18 @@
+//package 分支;
+import java.util.Scanner;
+public class if02 {
+	public static void main(String[] args){
+		Scanner my_scanner = new Scanner(System.in);
+		System.out.println("输入你的年龄");
+
+		int age = my_scanner.nextInt();
+
+		if (age > 18) {
+			System.out.println("you are over 18,fbi open the door!");
+
+		}
+		else {
+			System.out.println("you are beneath 18,good boy");
+		}
+	}
+}

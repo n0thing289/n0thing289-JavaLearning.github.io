@@ -1,0 +1,35 @@
+package switch_learning;
+import java.util.Scanner;
+public class switch_01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input = new Scanner(System.in);
+		System.out.println("you have a b c d e f g ,which can choose,please enter:");
+		char flag = input.next().charAt(0);
+		switch (flag) {
+			case ('a'): {
+				System.out.println("Today is monday!");
+			}
+			case ('b'): {
+				System.out.println("Today is tuesday!");
+			}
+			case ('c'): {
+				System.out.println("Today is wensday!");
+			}
+			case ('d'): {
+				System.out.println("Today is thurday!");
+			}
+			case ('e'): {
+				System.out.println("Today is friday!");
+			}
+			case ('f'): {
+				System.out.println("Today is sartuday!");
+			}
+			case ('g'): {
+				System.out.println("Today is sunday!");
+			}
+		}
+	}
+
+}
